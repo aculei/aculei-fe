@@ -15,3 +15,11 @@
 .background-div {
   background-image: url('/assets/aculo.png');
 }
+
+.splide__arrow--prev.arrow-none {
+  display: none !important;
+}
+
+.splide__arrow--next.arrow-none {
+  display: none !important;
+}

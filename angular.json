@@ -18,15 +18,19 @@
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
-            "styles": ["src/styles.css"],
+            "styles": [
+              "src/styles.css",
+              "node_modules/@splidejs/splide/dist/css/splide.min.css",
+              "node_modules/@splidejs/splide/dist/css/themes/splide-default.min.css"
+            ],
+            "scripts": ["node_modules/@splidejs/splide/dist/js/splide.js"],
             "assets": [
               {
                 "glob": "**/*",
                 "input": "public"
               },
               "src/assets"
-            ],
-            "scripts": []
+            ]
           },
           "configurations": {
             "production": {
@@ -79,7 +83,11 @@
               },
               "src/assets"
             ],
-            "styles": ["src/styles.css"],
+            "styles": [
+              "src/styles.css",
+              "node_modules/@splidejs/splide/dist/css/splide.min.css",
+              "node_modules/@splidejs/splide/dist/css/themes/splide-default.min.css"
+            ],
             "scripts": []
           }
         }
