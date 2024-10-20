@@ -1,38 +1,27 @@
-# Frontend
+# O
 
-<!-- ![hugging-face](https://img.shields.io/badge/Hugging%20Face-FFD21E.svg?style=plain&logo=Hugging-Face&logoColor=black)
-![python](https://img.shields.io/badge/Python-3776AB.svg?style=plain&logo=Python&logoColor=white)
-![TYOER](https://img.shields.io/badge/Typer-000000.svg?style=plaine&logo=Typer&logoColor=white) -->
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.2.
 
-Aculei's frontend
+## Development server
 
-<!-- WIP section if present -->
-<!-- - [x] Generate unique ids
-- [x] Read metadata using [exiftool](https://exiftool.org/)
-- [ ] Use OCR to extract more information
-- [x] Classify images using [Zero-shot image classification](https://huggingface.co/docs/transformers/tasks/zero_shot_image_classification) (current model: `openai/clip-vit-large-patch14`)
-- [x] Store results in a dataframe -->
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Install
+## Code scaffolding
 
-<!-- Clone the repository
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-```console
-git clone https://github.com/micheledinelli/aculei-cli.git
-```
+## Build
 
-Install requirements
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-```console
-pip install -r requirements.txt
-``` -->
+## Running unit tests
 
-## Run 🚀
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-<!-- ```console
-python3 main.py --help
-```
+## Running end-to-end tests
 
-![screenshot](screenshot.png)
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-A sample folder containing some images is available under `./images` -->
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
