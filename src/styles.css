@@ -1,1 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "texgyreheros-regular";
+  src: url("/fonts/qhv2/texgyreheroscn-regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "mono-lite-regular";
+  src: url("/fonts/qhv2/Q-04LITE-Regular.ttf") format("opentype");
+}
+
+.background-div {
+  background-image: url('/assets/aculo.png');
+}
