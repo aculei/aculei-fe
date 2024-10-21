@@ -26,3 +26,28 @@
 .splide__arrow--next.arrow-none {
   display: none !important;
 }
+
+#camStream, #canvas {
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+#camStream, #canvas, #canvasFinal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#canvasFinal {
+  background-image: url('https://lh3.googleusercontent.com/opBDNnhXBe1aiLOp3C9yatntR-8fQptvgDu8C1LSZM68khdJh6AQgIHdgWU_T80_2MBhQLjgrJwR6mY=w3840-h2160-rw-no');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+
