@@ -37,9 +37,8 @@ export class MotionDetectionComponent implements AfterViewInit {
     let frames: ImageData[] = [];
     let activeFrame = 0;
 
-    // Definisci la griglia
-    const rows = 10; // Numero di righe della griglia
-    const cols = 10; // Numero di colonne della griglia
+    const rows = 10;
+    const cols = 10; 
     const gridWidth = window.innerWidth / cols;
     const gridHeight = window.innerHeight / rows;
 
@@ -70,19 +69,16 @@ export class MotionDetectionComponent implements AfterViewInit {
         );
         const previousFrame = frames[activeFrame];
 
-        // Resetta la griglia
         for (let i = 0; i < rows; i++) {
           for (let j = 0; j < cols; j++) {
             movementGrid[i][j] = 0;
           }
         }
 
-        // Applicare il filtro grigio e calcolare il movimento
         for (let i = 0; i < currentFrame.data.length; i += 4) {
           const x = (i / 4) % canvas.width;
           const y = Math.floor(i / 4 / canvas.width);
 
-          // Confronta i pixel del frame corrente e del frame precedente
           const diffR = Math.abs(currentFrame.data[i] - previousFrame.data[i]);
           const diffG = Math.abs(
             currentFrame.data[i + 1] - previousFrame.data[i + 1]
@@ -92,7 +88,6 @@ export class MotionDetectionComponent implements AfterViewInit {
           );
 
           if (diffR > 50 || diffG > 50 || diffB > 50) {
-            // Soglia di movimento
             const row = Math.floor(y / gridHeight);
             const col = Math.floor(x / gridWidth);
             if (row < rows && col < cols) {
@@ -109,10 +104,9 @@ export class MotionDetectionComponent implements AfterViewInit {
           currentFrame.data[i + 2] =
             0.5 * (255 - currentFrame.data[i + 2]) +
             0.5 * previousFrame.data[i + 2];
-          currentFrame.data[i + 3] = 255; // Opacità piena
+          currentFrame.data[i + 3] = 255;
         }
 
-        // Trova la cella con il maggior movimento
         let maxMovement = 0;
         let maxRow = 0;
         let maxCol = 0;
@@ -157,36 +151,12 @@ export class MotionDetectionComponent implements AfterViewInit {
     img.src = "assets/volpe.jpg";
     img.style.position = "absolute";
     img.style.width = "450px";
-    img.style.border = "5px solid green";
-    const imageWidth = 450;
-    const imageHeight = 300;
+    img.style.border = "3px solid green";
+    img.style.left = `${col * gridWidth + (gridWidth / 2 - 75)}px`;
+    img.style.top = `${row * gridHeight + (gridHeight / 2 - 75)}px`;
 
-    // Calcola la posizione iniziale
-    let left = col * gridWidth + (gridWidth / 2 - imageWidth / 2); // Centra l'immagine orizzontalmente
-    let top = row * gridHeight + (gridHeight / 2 - imageHeight / 2); // Centra l'immagine verticalmente
-
-    // Verifica se l'immagine va fuori dai bordi orizzontali
-    if (left < 0) {
-      left = 0; // Evita che esca dal lato sinistro
-    } else if (left + imageWidth > window.innerWidth) {
-      left = window.innerWidth - imageWidth; // Evita che esca dal lato destro
-    }
-
-    // Verifica se l'immagine va fuori dai bordi verticali
-    if (top < 0) {
-      top = 0; // Evita che esca dal lato superiore
-    } else if (top + imageHeight > window.innerHeight) {
-      top = window.innerHeight - imageHeight; // Evita che esca dal lato inferiore
-    }
-
-    // Applica il posizionamento corretto
-    img.style.left = `${left}px`;
-    img.style.top = `${top}px`;
-
-    // Aggiungi l'immagine al DOM
     this.renderer.appendChild(document.body, img);
 
-    // Rimuove l'immagine dopo 2 secondi
     setTimeout(() => {
       this.renderer.removeChild(document.body, img);
       this.imageSpawned = false;
