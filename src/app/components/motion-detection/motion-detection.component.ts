@@ -1,13 +1,21 @@
-import { AfterViewInit, Component } from "@angular/core";
+import {
+  Component,
+  AfterViewInit,
+  Renderer2,
+  isStandalone,
+} from "@angular/core";
 
 @Component({
   selector: "app-motion-detection",
-  standalone: true,
-  imports: [],
   templateUrl: "./motion-detection.component.html",
-  styleUrl: "./motion-detection.component.css",
+  styleUrls: ["./motion-detection.component.css"],
+  standalone: true,
 })
 export class MotionDetectionComponent implements AfterViewInit {
+  imageSpawned: boolean = false; // Variabile per tracciare se c'è un'immagine attualmente visibile
+
+  constructor(private renderer: Renderer2) {}
+
   ngAfterViewInit(): void {
     this.initMotionDetection();
   }
@@ -29,9 +37,12 @@ export class MotionDetectionComponent implements AfterViewInit {
     let frames: ImageData[] = [];
     let activeFrame = 0;
 
+    // Variabili per i quadranti
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+
     const draw = () => {
       if (localStream && context && finalContext) {
-        // Usa le dimensioni del viewport per i canvas
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         canvasFinal.width = window.innerWidth;
@@ -52,18 +63,38 @@ export class MotionDetectionComponent implements AfterViewInit {
           canvas.height
         );
 
+        let movementDetected = false;
+        let movementQuadrant = "";
+
         for (let i = 0; i < currentFrame.data.length; i += 4) {
-          currentFrame.data[i] =
-            0.5 * (255 - currentFrame.data[i]) +
-            0.5 * frames[activeFrame].data[i];
-          currentFrame.data[i + 1] =
-            0.5 * (255 - currentFrame.data[i + 1]) +
-            0.5 * frames[activeFrame].data[i + 1];
-          currentFrame.data[i + 2] =
-            0.5 * (255 - currentFrame.data[i + 2]) +
-            0.5 * frames[activeFrame].data[i + 2];
-          currentFrame.data[i + 3] = 255;
+          const x = (i / 4) % canvas.width;
+          const y = Math.floor(i / 4 / canvas.width);
+
+          // Confronta il frame corrente con il frame precedente
+          if (
+            Math.abs(currentFrame.data[i] - frames[activeFrame].data[i]) > 50
+          ) {
+            // threshold
+            movementDetected = true;
+
+            // Determina il quadrante
+            if (x < canvas.width / 2 && y < canvas.height / 2) {
+              movementQuadrant = "topLeft";
+            } else if (x >= canvas.width / 2 && y < canvas.height / 2) {
+              movementQuadrant = "topRight";
+            } else if (x < canvas.width / 2 && y >= canvas.height / 2) {
+              movementQuadrant = "bottomLeft";
+            } else {
+              movementQuadrant = "bottomRight";
+            }
+            break; // interrompe il ciclo se viene rilevato un movimento
+          }
         }
+
+        if (movementDetected && !this.imageSpawned) {
+          this.spawnImage(movementQuadrant);
+        }
+
         finalContext.putImageData(currentFrame, 0, 0);
       }
     };
@@ -81,5 +112,44 @@ export class MotionDetectionComponent implements AfterViewInit {
     } else {
       console.error("Your browser does not support getUserMedia");
     }
+  }
+
+  spawnImage(quadrant: string) {
+    this.imageSpawned = true; // Segnala che un'immagine è stata generata
+
+    const img = this.renderer.createElement("img");
+    img.src = "assets/volpe.jpg"; // Percorso all'immagine che vuoi mostrare
+    img.style.position = "absolute";
+    img.style.width = "150px"; // Dimensioni fisse per l'immagine
+    img.style.height = "150px";
+
+    // Posiziona l'immagine nel quadrante giusto
+    switch (quadrant) {
+      case "topLeft":
+        img.style.left = "10px";
+        img.style.top = "10px";
+        break;
+      case "topRight":
+        img.style.right = "10px";
+        img.style.top = "10px";
+        break;
+      case "bottomLeft":
+        img.style.left = "10px";
+        img.style.bottom = "10px";
+        break;
+      case "bottomRight":
+        img.style.right = "10px";
+        img.style.bottom = "10px";
+        break;
+    }
+
+    // Aggiunge l'immagine al body
+    this.renderer.appendChild(document.body, img);
+
+    // Rimuovi l'immagine dopo qualche secondo e aggiorna lo stato
+    setTimeout(() => {
+      this.renderer.removeChild(document.body, img);
+      this.imageSpawned = false; // Permette di mostrare una nuova immagine
+    }, 4000); // L'immagine scompare dopo 2 secondi
   }
 }
