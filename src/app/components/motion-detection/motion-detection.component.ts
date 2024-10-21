@@ -37,9 +37,15 @@ export class MotionDetectionComponent implements AfterViewInit {
     let frames: ImageData[] = [];
     let activeFrame = 0;
 
-    // Variabili per i quadranti
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
+    // Definisci la griglia
+    const rows = 10; // Numero di righe della griglia
+    const cols = 10; // Numero di colonne della griglia
+    const gridWidth = window.innerWidth / cols;
+    const gridHeight = window.innerHeight / rows;
+
+    const movementGrid: number[][] = Array.from({ length: rows }, () =>
+      Array(cols).fill(0)
+    );
 
     const draw = () => {
       if (localStream && context && finalContext) {
@@ -63,8 +69,12 @@ export class MotionDetectionComponent implements AfterViewInit {
           canvas.height
         );
 
-        let movementDetected = false;
-        let movementQuadrant = "";
+        // Resetta la griglia
+        for (let i = 0; i < rows; i++) {
+          for (let j = 0; j < cols; j++) {
+            movementGrid[i][j] = 0;
+          }
+        }
 
         for (let i = 0; i < currentFrame.data.length; i += 4) {
           const x = (i / 4) % canvas.width;
@@ -74,25 +84,32 @@ export class MotionDetectionComponent implements AfterViewInit {
           if (
             Math.abs(currentFrame.data[i] - frames[activeFrame].data[i]) > 50
           ) {
-            // threshold
-            movementDetected = true;
-
-            // Determina il quadrante
-            if (x < canvas.width / 2 && y < canvas.height / 2) {
-              movementQuadrant = "topLeft";
-            } else if (x >= canvas.width / 2 && y < canvas.height / 2) {
-              movementQuadrant = "topRight";
-            } else if (x < canvas.width / 2 && y >= canvas.height / 2) {
-              movementQuadrant = "bottomLeft";
-            } else {
-              movementQuadrant = "bottomRight";
+            // threshold per rilevare movimento
+            const row = Math.floor(y / gridHeight);
+            const col = Math.floor(x / gridWidth);
+            if (row < rows && col < cols) {
+              movementGrid[row][col]++;
             }
-            break; // interrompe il ciclo se viene rilevato un movimento
           }
         }
 
-        if (movementDetected && !this.imageSpawned) {
-          this.spawnImage(movementQuadrant);
+        // Trova la cella con il maggior movimento
+        let maxMovement = 0;
+        let maxRow = 0;
+        let maxCol = 0;
+
+        for (let i = 0; i < rows; i++) {
+          for (let j = 0; j < cols; j++) {
+            if (movementGrid[i][j] > maxMovement) {
+              maxMovement = movementGrid[i][j];
+              maxRow = i;
+              maxCol = j;
+            }
+          }
+        }
+
+        if (maxMovement > 0 && !this.imageSpawned) {
+          this.spawnImage(maxRow, maxCol, gridWidth, gridHeight);
         }
 
         finalContext.putImageData(currentFrame, 0, 0);
@@ -114,34 +131,18 @@ export class MotionDetectionComponent implements AfterViewInit {
     }
   }
 
-  spawnImage(quadrant: string) {
+  spawnImage(row: number, col: number, gridWidth: number, gridHeight: number) {
     this.imageSpawned = true; // Segnala che un'immagine è stata generata
 
     const img = this.renderer.createElement("img");
     img.src = "assets/volpe.jpg"; // Percorso all'immagine che vuoi mostrare
     img.style.position = "absolute";
-    img.style.width = "150px"; // Dimensioni fisse per l'immagine
-    img.style.height = "150px";
+    img.style.width = "250px"; // Dimensioni fisse per l'immagine
+    img.style.height = "250px";
 
-    // Posiziona l'immagine nel quadrante giusto
-    switch (quadrant) {
-      case "topLeft":
-        img.style.left = "10px";
-        img.style.top = "10px";
-        break;
-      case "topRight":
-        img.style.right = "10px";
-        img.style.top = "10px";
-        break;
-      case "bottomLeft":
-        img.style.left = "10px";
-        img.style.bottom = "10px";
-        break;
-      case "bottomRight":
-        img.style.right = "10px";
-        img.style.bottom = "10px";
-        break;
-    }
+    // Calcola la posizione in base alla cella della griglia con più movimento
+    img.style.left = `${col * gridWidth + (gridWidth / 2 - 75)}px`; // Centra l'immagine nella cella
+    img.style.top = `${row * gridHeight + (gridHeight / 2 - 75)}px`; // Centra l'immagine nella cella
 
     // Aggiunge l'immagine al body
     this.renderer.appendChild(document.body, img);
@@ -150,6 +151,6 @@ export class MotionDetectionComponent implements AfterViewInit {
     setTimeout(() => {
       this.renderer.removeChild(document.body, img);
       this.imageSpawned = false; // Permette di mostrare una nuova immagine
-    }, 4000); // L'immagine scompare dopo 2 secondi
+    }, 2000); // L'immagine scompare dopo 2 secondi
   }
 }
