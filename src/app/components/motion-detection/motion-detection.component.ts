@@ -12,7 +12,7 @@ import {
   standalone: true,
 })
 export class MotionDetectionComponent implements AfterViewInit {
-  imageSpawned: boolean = false; // Variabile per tracciare se c'è un'immagine attualmente visibile
+  imageSpawned: boolean = false;
 
   constructor(private renderer: Renderer2) {}
 
@@ -68,6 +68,7 @@ export class MotionDetectionComponent implements AfterViewInit {
           canvas.width,
           canvas.height
         );
+        const previousFrame = frames[activeFrame];
 
         // Resetta la griglia
         for (let i = 0; i < rows; i++) {
@@ -76,21 +77,39 @@ export class MotionDetectionComponent implements AfterViewInit {
           }
         }
 
+        // Applicare il filtro grigio e calcolare il movimento
         for (let i = 0; i < currentFrame.data.length; i += 4) {
           const x = (i / 4) % canvas.width;
           const y = Math.floor(i / 4 / canvas.width);
 
-          // Confronta il frame corrente con il frame precedente
-          if (
-            Math.abs(currentFrame.data[i] - frames[activeFrame].data[i]) > 50
-          ) {
-            // threshold per rilevare movimento
+          // Confronta i pixel del frame corrente e del frame precedente
+          const diffR = Math.abs(currentFrame.data[i] - previousFrame.data[i]);
+          const diffG = Math.abs(
+            currentFrame.data[i + 1] - previousFrame.data[i + 1]
+          );
+          const diffB = Math.abs(
+            currentFrame.data[i + 2] - previousFrame.data[i + 2]
+          );
+
+          if (diffR > 50 || diffG > 50 || diffB > 50) {
+            // Soglia di movimento
             const row = Math.floor(y / gridHeight);
             const col = Math.floor(x / gridWidth);
             if (row < rows && col < cols) {
               movementGrid[row][col]++;
             }
           }
+
+          // Applica il filtro grigio
+          currentFrame.data[i] =
+            0.5 * (255 - currentFrame.data[i]) + 0.5 * previousFrame.data[i];
+          currentFrame.data[i + 1] =
+            0.5 * (255 - currentFrame.data[i + 1]) +
+            0.5 * previousFrame.data[i + 1];
+          currentFrame.data[i + 2] =
+            0.5 * (255 - currentFrame.data[i + 2]) +
+            0.5 * previousFrame.data[i + 2];
+          currentFrame.data[i + 3] = 255; // Opacità piena
         }
 
         // Trova la cella con il maggior movimento
@@ -132,24 +151,22 @@ export class MotionDetectionComponent implements AfterViewInit {
   }
 
   spawnImage(row: number, col: number, gridWidth: number, gridHeight: number) {
-    this.imageSpawned = true; // Segnala che un'immagine è stata generata
+    this.imageSpawned = true;
 
     const img = this.renderer.createElement("img");
-    img.src = "assets/volpe.jpg"; // Percorso all'immagine che vuoi mostrare
+    img.src = "assets/volpe.jpg";
     img.style.position = "absolute";
-    img.style.width = "450px"; // Dimensioni fisse per l'immagine
+    img.style.width = "450px";
+    img.style.border = "5px solid green";
 
-    // Calcola la posizione in base alla cella della griglia con più movimento
-    img.style.left = `${col * gridWidth + (gridWidth / 2 - 75)}px`; // Centra l'immagine nella cella
-    img.style.top = `${row * gridHeight + (gridHeight / 2 - 75)}px`; // Centra l'immagine nella cella
+    img.style.left = `${col * gridWidth + (gridWidth / 2 - 75)}px`;
+    img.style.top = `${row * gridHeight + (gridHeight / 2 - 75)}px`;
 
-    // Aggiunge l'immagine al body
     this.renderer.appendChild(document.body, img);
 
-    // Rimuovi l'immagine dopo qualche secondo e aggiorna lo stato
     setTimeout(() => {
       this.renderer.removeChild(document.body, img);
-      this.imageSpawned = false; // Permette di mostrare una nuova immagine
-    }, 2000); // L'immagine scompare dopo 2 secondi
+      this.imageSpawned = false;
+    }, 2000);
   }
 }
