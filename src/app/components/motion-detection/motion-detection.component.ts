@@ -94,17 +94,24 @@ export class MotionDetectionComponent implements AfterViewInit {
             if (row < rows && col < cols) {
               movementGrid[row][col]++;
             }
-          }
 
-          currentFrame.data[i] =
-            0.5 * (100 - currentFrame.data[i]) + 0.5 * previousFrame.data[i];
-          currentFrame.data[i + 1] =
-            0.5 * (100 - currentFrame.data[i + 1]) +
-            0.5 * previousFrame.data[i + 1];
-          currentFrame.data[i + 2] =
-            0.5 * (100 - currentFrame.data[i + 2]) +
-            0.5 * previousFrame.data[i + 2];
-          currentFrame.data[i + 3] = 100;
+            // Imposta i pixel rilevati come movimento in verde
+            currentFrame.data[i] = 0; // Rosso a 0
+            currentFrame.data[i + 1] = 255; // Verde a 255 (massimo)
+            currentFrame.data[i + 2] = 0; // Blu a 0
+            currentFrame.data[i + 3] = 255; // Opacità completa
+          } else {
+            // Applica il filtro scuro ai pixel non in movimento
+            currentFrame.data[i] =
+              0.5 * (100 - currentFrame.data[i]) + 0.5 * previousFrame.data[i];
+            currentFrame.data[i + 1] =
+              0.5 * (100 - currentFrame.data[i + 1]) +
+              0.5 * previousFrame.data[i + 1];
+            currentFrame.data[i + 2] =
+              0.5 * (100 - currentFrame.data[i + 2]) +
+              0.5 * previousFrame.data[i + 2];
+            currentFrame.data[i + 3] = 255; // Mantieni opacità
+          }
         }
 
         let maxMovement = 0;
