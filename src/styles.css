@@ -15,6 +15,9 @@
 .background-div {
   background-image: url('/assets/aculo.png');
 }
+.background-archive-detail {
+  background-image: url('/assets/aculo.png');
+}
 
 .splide__arrow--prev.arrow-none {
   display: none !important;
