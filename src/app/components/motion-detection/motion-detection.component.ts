@@ -37,8 +37,9 @@ export class MotionDetectionComponent implements AfterViewInit {
     let frames: ImageData[] = [];
     let activeFrame = 0;
 
-    const rows = 10;
-    const cols = 10; 
+    // Definisci la griglia
+    const rows = 10; // Numero di righe della griglia
+    const cols = 10; // Numero di colonne della griglia
     const gridWidth = window.innerWidth / cols;
     const gridHeight = window.innerHeight / rows;
 
@@ -95,16 +96,15 @@ export class MotionDetectionComponent implements AfterViewInit {
             }
           }
 
-          // Applica il filtro grigio
           currentFrame.data[i] =
-            0.5 * (255 - currentFrame.data[i]) + 0.5 * previousFrame.data[i];
+            0.5 * (100 - currentFrame.data[i]) + 0.5 * previousFrame.data[i];
           currentFrame.data[i + 1] =
-            0.5 * (255 - currentFrame.data[i + 1]) +
+            0.5 * (100 - currentFrame.data[i + 1]) +
             0.5 * previousFrame.data[i + 1];
           currentFrame.data[i + 2] =
-            0.5 * (255 - currentFrame.data[i + 2]) +
+            0.5 * (100 - currentFrame.data[i + 2]) +
             0.5 * previousFrame.data[i + 2];
-          currentFrame.data[i + 3] = 255;
+          currentFrame.data[i + 3] = 100;
         }
 
         let maxMovement = 0;
