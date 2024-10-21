@@ -137,8 +137,7 @@ export class MotionDetectionComponent implements AfterViewInit {
     const img = this.renderer.createElement("img");
     img.src = "assets/volpe.jpg"; // Percorso all'immagine che vuoi mostrare
     img.style.position = "absolute";
-    img.style.width = "250px"; // Dimensioni fisse per l'immagine
-    img.style.height = "250px";
+    img.style.width = "450px"; // Dimensioni fisse per l'immagine
 
     // Calcola la posizione in base alla cella della griglia con più movimento
     img.style.left = `${col * gridWidth + (gridWidth / 2 - 75)}px`; // Centra l'immagine nella cella
