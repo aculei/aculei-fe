@@ -1,37 +1,35 @@
 <div
-  class="flex absolute top-0 p-4 left-0 z-50 w-screen justify-between text-l text-gray-400 font-mono_lite"
+  class="flex absolute top-0 p-4 left-0 z-50 w-screen justify-between text-xs text-gray-200 font-mono_lite"
 >
-  <div class="flex gap-6">
-    <div
-      class="cursor-pointer"
-      routerLinkActive
-      #rlaExperience="routerLinkActive"
-      [routerLink]="['experience']"
-      [ngClass]="{
-          'text-gray-500': rlaExperience.isActive,
-        'hover:text-gray-500': !rlaExperience.isActive,
-        }"
-    >
-      EXPERIENCE
-    </div>
+  <div class="flex gap-28">
+    <div class="cursor-pointer"
+    routerLinkActive
+      #rlaHome="routerLinkActive"
+      [routerLink]="['']"
+    >HOME</div>
     <div
       class="cursor-pointer"
       routerLinkActive
       #rlaArchive="routerLinkActive"
       [routerLink]="['archive']"
-      [ngClass]="{
-          'text-gray-500': rlaArchive.isActive,
-        'hover:text-gray-500': !rlaArchive.isActive,
-        }"
+      
     >
       ARCHIVE
     </div>
-    <div class="cursor-pointer">ABOUT</div>
+    <div
+      class="cursor-pointer"
+      routerLinkActive
+      #rlaExperience="routerLinkActive"
+      [routerLink]="['experience']"
+     
+    >
+      EXPERIENCE
+    </div>
   </div>
-  <div class="flex flex-col">
-    <div>TOBIA FAVERIO</div>
-    <a class="underline cursor-pointer text-xs" href="mailto:aculei@aculei.xyz"
-      >ACULEI&#64;ACULEI.XYZ</a
+  <div class="flex gap-20">
+    <div class="uppercase max-w-[340px]">ACULEI is an interactive archive based on huntercameras shoot recorded since 2020 around Picco dell’Aquila valley in Umbria, Italy.</div>
+    <div class="cursor-pointer"
+      >ABOUT</div
     >
   </div>
 </div>

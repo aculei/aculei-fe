@@ -3,6 +3,7 @@ import {
   AfterViewInit,
   Renderer2,
   isStandalone,
+  OnDestroy,
 } from "@angular/core";
 
 @Component({
@@ -11,13 +12,23 @@ import {
   styleUrls: ["./motion-detection.component.css"],
   standalone: true,
 })
-export class MotionDetectionComponent implements AfterViewInit {
+export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
   imageSpawned: boolean = false;
+  private localStream: MediaStream | null = null;
 
   constructor(private renderer: Renderer2) {}
 
   ngAfterViewInit(): void {
     this.initMotionDetection();
+  }
+
+  ngOnDestroy(): void {
+    // Ferma il flusso video se il componente viene distrutto
+    if (this.localStream) {
+      const tracks = this.localStream.getTracks();
+      tracks.forEach((track) => track.stop());
+      this.localStream = null; // Libera il flusso
+    }
   }
 
   initMotionDetection() {
@@ -95,13 +106,12 @@ export class MotionDetectionComponent implements AfterViewInit {
               movementGrid[row][col]++;
             }
 
-            // Imposta i pixel rilevati come movimento in verde
-            currentFrame.data[i] = 0; // Rosso a 0
-            currentFrame.data[i + 1] = 255; // Verde a 255 (massimo)
-            currentFrame.data[i + 2] = 0; // Blu a 0
-            currentFrame.data[i + 3] = 255; // Opacità completa
+            const grayValue = 128;
+            currentFrame.data[i] = grayValue;
+            currentFrame.data[i + 1] = grayValue;
+            currentFrame.data[i + 2] = grayValue;
+            currentFrame.data[i + 3] = 100;
           } else {
-            // Applica il filtro scuro ai pixel non in movimento
             currentFrame.data[i] =
               0.5 * (100 - currentFrame.data[i]) + 0.5 * previousFrame.data[i];
             currentFrame.data[i + 1] =
@@ -158,7 +168,6 @@ export class MotionDetectionComponent implements AfterViewInit {
     img.src = "assets/volpe.jpg";
     img.style.position = "absolute";
     img.style.width = "450px";
-    img.style.border = "3px solid green";
     img.style.left = `${col * gridWidth + (gridWidth / 2 - 75)}px`;
     img.style.top = `${row * gridHeight + (gridHeight / 2 - 75)}px`;
 
