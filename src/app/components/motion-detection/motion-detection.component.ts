@@ -15,6 +15,7 @@ import {
 export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
   imageSpawned: boolean = false;
   private localStream: MediaStream | null = null;
+  drawInterval: any;
 
   constructor(private renderer: Renderer2) {}
 
@@ -23,11 +24,8 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Ferma il flusso video se il componente viene distrutto
-    if (this.localStream) {
-      const tracks = this.localStream.getTracks();
-      tracks.forEach((track) => track.stop());
-      this.localStream = null; // Libera il flusso
+    if (this.drawInterval) {
+      clearInterval(this.drawInterval);
     }
   }
 
@@ -153,7 +151,8 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
           localStream = stream;
           camStream.srcObject = stream;
           camStream.play();
-          setInterval(draw, 32);
+          this.drawInterval = setInterval(draw, 32);
+          this.drawInterval;
         })
         .catch((error) => console.error("Error accessing webcam:", error));
     } else {
