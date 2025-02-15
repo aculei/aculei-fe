@@ -1,76 +1,20 @@
 <div class="w-screen h-screen bg-black font-mono_lite text-2xs">
   <div
-    class="mt-12 relative h-full flex flex-col text-gray-300 w-full text-xs p-6"
+    class="mt-16 relative h-full flex flex-col text-gray-300 w-full text-xs p-6"
   >
-    <div class="w-full md:block hidden">
+    <div class="w-full md:block hidden relative">
       <div class="bg-green-700 h-4 w-full"></div>
-      <div class="w-full flex justify-between">
+      <div class="w-full flex justify-between absolute z-50">
         <div class="min-w-44"></div>
         <div class="flex gap-4">
-          <button
-            class="bg-green-700 p-1 px-2 flex justify-between items-center min-w-64"
-          >
-            <div>BEAR</div>
-            <div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="size-3"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                />
-              </svg>
-            </div>
-          </button>
-          <button
-            class="bg-green-700 p-1 px-2 gap-2 flex justify-between items-center"
-          >
-            <div>2021-08</div>
-            <div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="size-3"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                />
-              </svg>
-            </div>
-          </button>
+          <app-filters-dropdown></app-filters-dropdown>
+          <app-filters-datepicker></app-filters-datepicker>
         </div>
         <div class="flex gap-4">
-          <button class="bg-green-700 p-1 px-2 flex justify-between items-center min-w-24">
-            <div>14°C</div>
-            <div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="size-3"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                />
-              </svg>
-            </div>
-          </button>
-          <button class="bg-green-700 p-1 px-2 flex justify-between items-center min-w-24 mr-6">
+          <app-filters-temperature></app-filters-temperature>
+          <button
+            class="bg-green-700 p-1 px-2 flex justify-between items-center min-w-24 mr-6"
+          >
             <div>O</div>
             <div>
               <svg

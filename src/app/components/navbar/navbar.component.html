@@ -1,35 +1,40 @@
 <div
-  class="flex absolute top-0 p-4 left-0 z-50 w-screen justify-between text-xs text-gray-200 font-mono_lite"
+  class="grid grid-cols-12 gap-x-3 absolute top-0 p-4 left-0 z-50 w-screen text-xs text-gray-200 font-mono_lite"
 >
-  <div class="flex gap-28">
-    <div class="cursor-pointer"
+  <div
+    class="cursor-pointer"
     routerLinkActive
-      #rlaHome="routerLinkActive"
-      [routerLink]="['']"
-    >HOME</div>
-    <div
-      class="cursor-pointer"
-      routerLinkActive
-      #rlaArchive="routerLinkActive"
-      [routerLink]="['archive']"
-      
-    >
-      ARCHIVE
-    </div>
-    <div
-      class="cursor-pointer"
-      routerLinkActive
-      #rlaExperience="routerLinkActive"
-      [routerLink]="['experience']"
-     
-    >
-      EXPERIENCE
-    </div>
+    #rlaHome="routerLinkActive"
+    [routerLink]="['']"
+  >
+    HOME
   </div>
-  <div class="flex gap-20">
-    <div class="uppercase max-w-[340px]">ACULEI is an interactive archive based on huntercameras shoot recorded since 2020 around Picco dell’Aquila valley in Umbria, Italy.</div>
-    <div class="cursor-pointer"
-      >ABOUT</div
-    >
+  <div
+    class="cursor-pointer"
+    routerLinkActive
+    #rlaArchive="routerLinkActive"
+    [routerLink]="['archive']"
+  >
+    ARCHIVE
   </div>
+  <div
+    class="cursor-pointer"
+    routerLinkActive
+    #rlaExperience="routerLinkActive"
+    [routerLink]="['experience']"
+  >
+    EXPERIENCE
+  </div>
+  <div class=""></div>
+  <div class=""></div>
+  <div class=""></div>
+  <div class=""></div>
+  <div class=""></div>
+  <div class="uppercase max-w-[340px] col-span-3">
+    <div class="xl:block hidden">
+      ACULEI is an interactive archive based on huntercameras shoot recorded since
+      2020 around Picco dell`Aquila valley in Umbria, Italy.
+    </div>
+  </div> 
+  <div class="cursor-pointer flex justify-end">ABOUT</div>
 </div>
