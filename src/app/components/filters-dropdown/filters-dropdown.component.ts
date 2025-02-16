@@ -2,11 +2,10 @@ import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
 
 @Component({
-  selector: "app-filters-dropdown",
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: "./filters-dropdown.component.html",
-  styleUrl: "./filters-dropdown.component.css",
+    selector: "app-filters-dropdown",
+    imports: [CommonModule],
+    templateUrl: "./filters-dropdown.component.html",
+    styleUrl: "./filters-dropdown.component.css"
 })
 export class FiltersDropdownComponent {
   isFilterSelectionOpen = false;

@@ -4,8 +4,7 @@ import { NgxSplideComponent, NgxSplideModule } from "ngx-splide";
 
 @Component({
   selector: "app-archive-carousel",
-  standalone: true,
-  imports: [NgxSplideModule, RouterLink, RouterLinkActive],
+  imports: [NgxSplideModule, RouterLink],
   templateUrl: "./archive-carousel.component.html",
   styleUrl: "./archive-carousel.component.css",
 })

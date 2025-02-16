@@ -1,10 +1,10 @@
 import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
+import { RangeDatePickerComponent } from "../range-date-picker/range-date-picker.component";
 
 @Component({
   selector: "app-filters-datepicker",
-  standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RangeDatePickerComponent],
   templateUrl: "./filters-datepicker.component.html",
   styleUrl: "./filters-datepicker.component.css",
 })

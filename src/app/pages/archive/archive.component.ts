@@ -5,16 +5,15 @@ import { FiltersDatepickerComponent } from "../../components/filters-datepicker/
 import { FiltersTemperatureComponent } from "../../components/filters-temperature/filters-temperature.component";
 
 @Component({
-  selector: "app-archive",
-  standalone: true,
-  imports: [
-    ArchiveCarouselComponent,
-    FiltersDropdownComponent,
-    FiltersDatepickerComponent,
-    FiltersTemperatureComponent,
-  ],
-  templateUrl: "./archive.component.html",
-  styleUrl: "./archive.component.css",
+    selector: "app-archive",
+    imports: [
+        ArchiveCarouselComponent,
+        FiltersDropdownComponent,
+        FiltersDatepickerComponent,
+        FiltersTemperatureComponent,
+    ],
+    templateUrl: "./archive.component.html",
+    styleUrl: "./archive.component.css"
 })
 export class ArchiveComponent {
   isAnimalFilterOpen = false;

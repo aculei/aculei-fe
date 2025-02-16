@@ -5,11 +5,10 @@ export interface DatasetInfo {
   [key: string]: string | number;
 }
 @Component({
-  selector: "app-footer",
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: "./footer.component.html",
-  styleUrl: "./footer.component.css",
+    selector: "app-footer",
+    imports: [CommonModule],
+    templateUrl: "./footer.component.html",
+    styleUrl: "./footer.component.css"
 })
 export class FooterComponent {
   datasetInfo: DatasetInfo = {
