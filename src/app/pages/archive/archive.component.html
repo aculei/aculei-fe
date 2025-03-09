@@ -1,6 +1,6 @@
-<div class="w-screen h-screen bg-black font-mono_lite text-2xs">
+<div class="w-screen pb-10 bg-black font-mono_lite text-2xs">
   <div
-    class="mt-16 relative h-full flex flex-col text-gray-300 w-full text-xs p-6"
+    class="mt-16 relative h-full flex flex-col text-gray-300 w-full text-xs py-6"
   >
     <div class="w-full md:block hidden relative">
       <div class="bg-green-700 h-4 w-full"></div>
@@ -8,41 +8,26 @@
         <div class="min-w-44"></div>
         <div class="flex gap-4">
           <app-filters-dropdown></app-filters-dropdown>
-          <app-filters-datepicker></app-filters-datepicker>
+          <app-filters-datepicker
+            [(start)]="start"
+            [(end)]="end"
+            (dateChange)="fetchArchive()"
+          ></app-filters-datepicker>
         </div>
         <div class="flex gap-4">
           <app-filters-temperature></app-filters-temperature>
-          <button
-            class="bg-green-700 p-1 px-2 flex justify-between items-center min-w-24 mr-6"
-          >
-            <div>O</div>
-            <div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="size-3"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                />
-              </svg>
-            </div>
-          </button>
+          <app-filters-moon-phase></app-filters-moon-phase>
         </div>
       </div>
     </div>
-    @for (item of items; track $index) {
-
+    @for (camImages of getCams(); track $index) {
     <div class="flex gap-8 font-mono_lite mb-1">
-      <div>CAM</div>
-      <div>43.173640014730914, 12.400478219577533</div>
+      <div>{{ camImages }}</div>
     </div>
-    <app-archive-carousel class="mb-4"></app-archive-carousel>
+    <app-archive-carousel
+      [images]="groupedImages[camImages]"
+      class="mb-4"
+    ></app-archive-carousel>
     }
   </div>
 </div>

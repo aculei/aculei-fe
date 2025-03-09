@@ -1,0 +1,70 @@
+<!-- @if (showLabel()) { }
+<div
+  class="min-w-full h-9 flex items-center rounded-md px-2 py-0.5 mt-1 text-sm ring-1 ring-gray-200 relative"
+>
+  <mat-date-range-input class="min-w-full" [rangePicker]="picker">
+    <input
+      matStartDate
+      (focus)="onStartFocus()"
+      (blur)="onStartBlur()"
+      [ngModel]="start()"
+      (dateChange)="onStartDateChange($event)"
+      placeholder="Inizio"
+    />
+    <input
+      matEndDate
+      (focus)="onEndFocus()"
+      (blur)="onEndBlur()"
+      [ngModel]="end()"
+      (dateChange)="onEndDateChange($event)"
+      placeholder="Fine"
+    />
+  </mat-date-range-input>
+
+  @if (nullable() && start() !== undefined && end() !== undefined) { icon }
+
+  <mat-datepicker-toggle
+    matIconSuffix
+    class="absolute right-0"
+    [for]="picker"
+  ></mat-datepicker-toggle>
+  <mat-date-range-picker #picker class="mt-8"></mat-date-range-picker>
+</div> -->
+
+<div
+  class="min-w-full h-9 flex items-center rounded-md px-2 py-0.5 mt-1 text-sm ring-1 ring-green-600 relative bg-gray-900 text-white"
+>
+  <mat-date-range-input class="min-w-full text-white" [rangePicker]="picker">
+    <input
+      matStartDate
+      (focus)="onStartFocus()"
+      (blur)="onStartBlur()"
+      [ngModel]="start()"
+      (dateChange)="onStartDateChange($event)"
+      placeholder="Inizio"
+      class="text-white placeholder-gray-400"
+    />
+    <input
+      matEndDate
+      (focus)="onEndFocus()"
+      (blur)="onEndBlur()"
+      [ngModel]="end()"
+      (dateChange)="onEndDateChange($event)"
+      placeholder="Fine"
+      class="text-white placeholder-gray-400"
+    />
+  </mat-date-range-input>
+
+  @if (nullable() && start() !== undefined && end() !== undefined) { icon }
+
+  <mat-datepicker-toggle
+    matIconSuffix
+    class="absolute right-0 text-green-500"
+    [for]="picker"
+  ></mat-datepicker-toggle>
+  <mat-date-range-picker
+    #picker
+    class="mt-8"
+    panelClass="dark-green-calendar"
+  ></mat-date-range-picker>
+</div>

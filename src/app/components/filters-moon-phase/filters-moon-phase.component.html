@@ -1,0 +1,50 @@
+<div class="relative inline-block text-left text-xs mr-2">
+  <div
+    class="min-w-36 hover:text-black cursor-pointer"
+    (click)="toggleFilterSelection()"
+  >
+    <div
+      class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none uppercase"
+    >
+      <div class="bg-green-700 text-white rounded flex gap-1">
+        @if (getSelectedMoonPhases().length === 0) {
+        <span>Moon Phase</span>
+        } @else { @for (selectedPhase of getSelectedMoonPhases(); track $index)
+        {
+        <img class="w-4 h-4" [src]="selectedPhase.imageSvg" alt="" />
+        } }
+      </div>
+      <svg
+        class="-mr-1 size-5 transition-all duration-300"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+        data-slot="icon"
+        [ngClass]="{
+          'transform rotate-180': isFilterSelectionOpen
+        }"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </div>
+  </div>
+  @if (isFilterSelectionOpen) {
+  <div
+    class="absolute right-0 z-10 min-w-36 origin-top-left bg-black text-white"
+  >
+    @for (moonPhase of moonPhases; track $index) {
+    <div
+      class="px-2 py-2 uppercase flex flex-col gap-1 select-none cursor-pointer"
+      [class.bg-green-700]="isSelected(moonPhase)"
+      (click)="toggleMoonPhase(moonPhase)"
+    >
+      <img class="w-4 h-4" [src]="moonPhase.imageSvg" alt="" />
+    </div>
+    }
+  </div>
+  }
+</div>

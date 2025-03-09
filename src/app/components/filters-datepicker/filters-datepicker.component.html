@@ -1,12 +1,13 @@
 <div class="relative inline-block text-left text-xs">
   <div
-    class="min-w-36 hover:text-black cursor-pointer"
+    class="min-w-72 hover:text-black cursor-pointer"
     (click)="toggleFilterSelection()"
   >
     <div
       class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none"
     >
-      2021/08
+      @if (start() && end()) { {{ start() | date : "dd/MM/yyyy" }} -
+      {{ end() | date : "dd/MM/yyyy" }} } @else { Entire project }
       <svg
         class="-mr-1 size-5 transition-all duration-300"
         viewBox="0 0 20 20"
@@ -26,43 +27,38 @@
       </svg>
     </div>
   </div>
-
-  <!--
-    Dropdown menu, show/hide based on menu state.
-
-    Entering: "transition ease-out duration-100"
-      From: "transform opacity-0 scale-95"
-      To: "transform opacity-100 scale-100"
-    Leaving: "transition ease-in duration-75"
-      From: "transform opacity-100 scale-100"
-      To: "transform opacity-0 scale-95"
-  -->
   @if (isFilterSelectionOpen) {
   <div
-    class="absolute right-0 z-10 min-w-36 origin-top-left bg-black text-white"
+    class="absolute right-0 z-10 min-w-72 origin-top-left bg-black text-white"
   >
     <div
       class="px-2 py-2 uppercase flex flex-col gap-1 text-white select-none cursor-pointer"
     >
-      <div class="flex gap-2">
-        <app-range-date-picker></app-range-date-picker>
+      <div class="flex gap-2 w-full">
+        <app-date-range-picker
+          [(start)]="start"
+          [(end)]="end"
+          (dateChange)="onDateChange()"
+          class="w-full"
+          id="1"
+        ></app-date-range-picker>
       </div>
     </div>
     <div
       class="px-2 py-2 uppercase flex flex-col gap-1 hover:bg-green-700 text-white select-none cursor-pointer"
-      (click)="toggleFilterSelection()"
+      (click)="setFirstYear()"
     >
       Fist year
     </div>
     <div
       class="px-2 py-2 uppercase flex flex-col gap-1 hover:bg-green-700 text-white select-none cursor-pointer"
-      (click)="toggleFilterSelection()"
+      (click)="setSecondYear()"
     >
       Last year
     </div>
     <div
       class="px-2 py-2 uppercase flex flex-col gap-1 hover:bg-green-700 text-white select-none cursor-pointer"
-      (click)="toggleFilterSelection()"
+      (click)="removeFilter()"
     >
       Entire project
     </div>

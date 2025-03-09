@@ -4,9 +4,9 @@
     (click)="toggleFilterSelection()"
   >
     <div
-      class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none"
+      class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none uppercase"
     >
-      BEAR
+      {{ getDropdownLabel() }}
       <svg
         class="-mr-1 size-5 transition-all duration-300"
         viewBox="0 0 20 20"
@@ -26,17 +26,6 @@
       </svg>
     </div>
   </div>
-
-  <!--
-    Dropdown menu, show/hide based on menu state.
-
-    Entering: "transition ease-out duration-100"
-      From: "transform opacity-0 scale-95"
-      To: "transform opacity-100 scale-100"
-    Leaving: "transition ease-in duration-75"
-      From: "transform opacity-100 scale-100"
-      To: "transform opacity-0 scale-95"
-  -->
   @if (isFilterSelectionOpen) {
   <div
     class="absolute right-0 z-10 w-64 origin-top-left bg-black text-white"
@@ -46,14 +35,16 @@
     tabindex="-1"
   >
     <div class="" role="none">
-      <!-- Active: "bg-gray-100 text-gray-900 outline-none", Not Active: "text-gray-700" -->
-      @for (filter of filters; track $index) {
+      @for (animal of animals; track $index) {
       <div
         href="#"
-        class="block px-2 py-2 uppercase hover:bg-green-700 text-whiten select-none cursor-pointer"
-        (click)="toggleFilterSelection()"
+        class="block px-2 py-2 uppercase text-white select-none cursor-pointer"
+        (click)="toggleAnimalSelection(animal)"
+        [ngClass]="{
+          'bg-green-700': isSelected(animal),
+        }"
       >
-        {{ filter }}
+        {{ animal }}
       </div>
       }
     </div>

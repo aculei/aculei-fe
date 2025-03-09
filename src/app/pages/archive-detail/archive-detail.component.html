@@ -16,9 +16,9 @@
         <div class="min-w-44"></div>
         <div class="flex gap-4">
           <button
-            class="bg-green-700 p-1 px-2 flex justify-between items-center min-w-64"
+            class="bg-green-700 p-1 px-2 flex justify-between items-center min-w-64 uppercase"
           >
-            <div>BEAR</div>
+            <div>{{image?.predicted_animal}}</div>
             <div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +39,7 @@
           <button
             class="bg-green-700 p-1 px-2 gap-2 flex justify-between items-center"
           >
-            <div>2021-08</div>
+            <div>{{image?.date}}</div>
             <div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +62,7 @@
           <button
             class="bg-green-700 p-1 px-2 flex justify-between items-center min-w-24"
           >
-            <div>14°C</div>
+            <div>{{image?.temperature}}°C</div>
             <div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
