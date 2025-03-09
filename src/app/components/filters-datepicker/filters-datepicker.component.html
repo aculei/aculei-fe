@@ -4,7 +4,7 @@
     (click)="toggleFilterSelection()"
   >
     <div
-      class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none"
+      class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none uppercase"
     >
       @if (start() && end()) { {{ start() | date : "dd/MM/yyyy" }} -
       {{ end() | date : "dd/MM/yyyy" }} } @else { Entire project }
@@ -29,7 +29,7 @@
   </div>
   @if (isFilterSelectionOpen) {
   <div
-    class="absolute right-0 z-10 min-w-72 origin-top-left bg-black text-white"
+    class="absolute right-0 z-10 min-w-72 origin-top-left bg-black text-white uppercase"
   >
     <div
       class="px-2 py-2 uppercase flex flex-col gap-1 text-white select-none cursor-pointer"

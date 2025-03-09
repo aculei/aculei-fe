@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, model, output } from "@angular/core";
 import { FormsModule } from "@angular/forms";
+import { ClickOutsideDirective } from "../../directive/click-outside.directive";
 
 @Component({
   selector: "app-filters-temperature",
