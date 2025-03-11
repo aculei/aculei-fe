@@ -26,7 +26,6 @@ export class ArchiveDetailComponent {
     this.route.paramMap.subscribe((paramMap) => {
       this.archiveImageId = paramMap.get("id") as string;
     });
-    console.log(this.archiveImageId);
     if (this.archiveImageId) {
       this.fetchImage(this.archiveImageId);
     }
@@ -39,9 +38,7 @@ export class ArchiveDetailComponent {
       })
       .subscribe({
         next: (response) => {
-          console.log("Risposta API:", response);
           this.image = response;
-          console.log("Immagine:", this.image);
         },
         error: (error) => {
           console.error("Errore durante la richiesta API:", error);

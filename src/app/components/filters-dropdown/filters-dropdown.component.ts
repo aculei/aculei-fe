@@ -24,9 +24,7 @@ export class FiltersDropdownComponent implements OnInit {
   ngOnInit() {
     combineLatest([this.selectedAnimalsFilters$])
       .pipe(distinctUntilChanged())
-      .subscribe(() => {
-        console.log("Selected animals", this.selectedAnimalsFilters());
-      });
+      .subscribe(() => {});
   }
 
   constructor() {

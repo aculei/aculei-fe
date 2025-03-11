@@ -136,8 +136,6 @@ export class ArchiveComponent implements OnInit, OnDestroy {
       .get<any>(`${this.apiUrl}filters`, { responseType: "json" })
       .subscribe({
         next: (response) => {
-          console.log("Filters:", response);
-
           this.filters = response.reduce((acc: ArchiveFilters, filter: any) => {
             switch (filter.name) {
               case "animals":
