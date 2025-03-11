@@ -1,13 +1,16 @@
-<div class="w-screen pb-10 bg-black font-mono_lite text-2xs">
+<div class="w-screen bg-black font-mono_lite text-2xs">
   <div
-    class="mt-16 relative h-full flex flex-col text-gray-300 w-full text-xs py-6"
+    class="relative h-full flex flex-col text-gray-300 w-full text-xs pt-24 pb-16"
   >
     <div class="w-full md:block hidden relative">
       <div class="bg-green-700 h-4 w-full"></div>
       <div class="w-full flex justify-between absolute z-50">
         <div class="min-w-44"></div>
         <div class="flex gap-4">
-          <app-filters-dropdown></app-filters-dropdown>
+          <app-filters-dropdown
+            [animals]="filters.animal?.values"
+            [(selectedAnimalsFilters)]="selectedAnimalsFilters"
+          ></app-filters-dropdown>
           <app-filters-datepicker
             [(start)]="start"
             [(end)]="end"
@@ -15,8 +18,10 @@
           ></app-filters-datepicker>
         </div>
         <div class="flex gap-4">
-          <app-filters-temperature></app-filters-temperature>
-          <app-filters-moon-phase></app-filters-moon-phase>
+          <app-filters-temperature
+            [(temperatureFromToFilters)]="temperatureFromToFilters"
+          ></app-filters-temperature>
+          <app-filters-moon-phase [(selectedMoonPhasesFilters)]="selectedMoonPhasesFilters"></app-filters-moon-phase>
         </div>
       </div>
     </div>

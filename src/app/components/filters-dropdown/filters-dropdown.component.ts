@@ -1,5 +1,10 @@
 import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, model, output, OnInit, input } from "@angular/core";
+import { combineLatest, debounce, distinctUntilChanged, interval } from "rxjs";
+import { toObservable } from "@angular/core/rxjs-interop";
+export interface SelectedAnimalsFilters {
+  animals: string[] | undefined;
+}
 
 @Component({
   selector: "app-filters-dropdown",
@@ -7,26 +12,27 @@ import { Component } from "@angular/core";
   templateUrl: "./filters-dropdown.component.html",
   styleUrl: "./filters-dropdown.component.css",
 })
-export class FiltersDropdownComponent {
+export class FiltersDropdownComponent implements OnInit {
+  animals = input<string[] | undefined>();
+  selectedAnimalsFilters = model<SelectedAnimalsFilters | undefined>({
+    animals: [],
+  });
+  selectedAnimalsFilters$ = toObservable(this.selectedAnimalsFilters);
+  selectedAnimals = new Map<string, boolean>();
   isFilterSelectionOpen = false;
 
-  animals: string[] = [
-    "Badger",
-    "Buzzard",
-    "Cat",
-    "Dog",
-    "Fox",
-    "Horse",
-    "Rabbit",
-    "Rat",
-    "Squirrel",
-    "Weasel",
-  ];
-
-  selectedAnimals = new Map<string, boolean>();
+  ngOnInit() {
+    combineLatest([this.selectedAnimalsFilters$])
+      .pipe(distinctUntilChanged())
+      .subscribe(() => {
+        console.log("Selected animals", this.selectedAnimalsFilters());
+      });
+  }
 
   constructor() {
-    this.animals.forEach((animal) => this.selectedAnimals.set(animal, false));
+    this.animals()?.forEach((animal) =>
+      this.selectedAnimals.set(animal, false)
+    );
   }
 
   toggleFilterSelection() {
@@ -36,20 +42,21 @@ export class FiltersDropdownComponent {
   toggleAnimalSelection(animal: string) {
     const currentState = this.selectedAnimals.get(animal) || false;
     this.selectedAnimals.set(animal, !currentState);
+    this.selectedAnimalsFilters.set({ animals: this.getSelectedAnimals() });
   }
 
   isSelected(animal: string): boolean {
     return this.selectedAnimals.get(animal) || false;
   }
 
-  getSelectedAnimals(): string[] {
-    return this.animals.filter((animal) => this.isSelected(animal));
+  getSelectedAnimals(): string[] | undefined {
+    return this.animals()?.filter((animal) => this.isSelected(animal));
   }
 
   getDropdownLabel(): string {
     const selected = this.getSelectedAnimals();
-    if (selected.length === 0) return "Animals";
-    if (selected.length === 1) return `${selected[0]} selected`;
-    return `(${selected.length}) animal selected`;
+    if (selected?.length === 0) return "Animals";
+    if (selected?.length === 1) return `${selected[0]} selected`;
+    return `(${selected?.length}) animal selected`;
   }
 }

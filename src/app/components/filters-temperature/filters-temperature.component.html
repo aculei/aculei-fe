@@ -8,10 +8,10 @@
     <div
       class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none uppercase"
     >
-      @if (from() !== undefined && to() !== undefined) {
-      {{ from() }}°C - {{ to() }}°C } @else if (to() !== undefined) { Below
-      {{ to() }}° } @else if (from() !== undefined) { Above {{ from() }}° }
-      @else { Entire range }
+      @if (temperatureFromToFilters()?.from === this.lowerBound() && temperatureFromToFilters()?.to === this.upperBound()) { Entire range }
+      @else { 
+        {{ temperatureFromToFilters()?.from }}° - {{ temperatureFromToFilters()?.to }}°
+      }
       <svg
         class="-mr-1 size-5 transition-all duration-300"
         viewBox="0 0 20 20"
@@ -45,6 +45,8 @@
             type="number"
             class="w-12 bg-gray-900 text-white"
             [(ngModel)]="from"
+            [min]="lowerBound()"
+            [max]="upperBound()"
             (change)="onFromChange()"
           />
         </div>
@@ -54,6 +56,8 @@
             type="number"
             class="w-12 bg-gray-900 text-white"
             [(ngModel)]="to"
+            [min]="lowerBound()"
+            [max]="upperBound()"
             (change)="onFromChange()"
           />
         </div>
@@ -61,19 +65,19 @@
     </div>
     <div
       class="px-2 py-2 uppercase flex flex-col gap-1 hover:bg-green-700 text-white select-none cursor-pointer"
-      (click)="applyFilter('below')"
+      (click)="changeFilter(lowerBound(), 10)"
     >
-      Below 0°
+      Below 10°
     </div>
     <div
       class="px-2 py-2 uppercase flex flex-col gap-1 hover:bg-green-700 text-white select-none cursor-pointer"
-      (click)="applyFilter('above')"
+      (click)="changeFilter(10, upperBound())"
     >
-      Above 0°
+      Above 10°
     </div>
     <div
       class="px-2 py-2 uppercase flex flex-col gap-1 hover:bg-green-700 text-white select-none cursor-pointer"
-      (click)="applyFilter('entire')"
+      (click)="changeFilter(lowerBound(), upperBound())"
     >
       Entire range
     </div>

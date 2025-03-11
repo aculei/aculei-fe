@@ -1,10 +1,14 @@
 import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, model } from "@angular/core";
 
 export interface MoonPhase {
   id: number;
   name: string;
   imageSvg: string;
+}
+
+export interface SelectedMoonPhaseFilters {
+  moonPhases: string[] | undefined;
 }
 
 @Component({
@@ -15,6 +19,10 @@ export interface MoonPhase {
 })
 export class FiltersMoonPhaseComponent {
   isFilterSelectionOpen = false;
+
+  selectedMoonPhasesFilters = model<SelectedMoonPhaseFilters | undefined>({
+    moonPhases: [],
+  });
 
   moonPhases: MoonPhase[] = [
     { id: 1, name: "New Moon", imageSvg: "assets/svg/1.svg" },
@@ -36,7 +44,9 @@ export class FiltersMoonPhaseComponent {
   toggleMoonPhase(phase: MoonPhase) {
     const isSelected = this.selectedMoonPhases.get(phase.id) || false;
     this.selectedMoonPhases.set(phase.id, !isSelected);
-    console.log(this.selectedMoonPhases);
+    this.selectedMoonPhasesFilters.set({
+      moonPhases: this.getSelectedMoonPhases().map((phase) => phase.name),
+    });
   }
 
   isSelected(phase: MoonPhase): boolean {
