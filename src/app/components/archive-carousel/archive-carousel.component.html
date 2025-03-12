@@ -11,13 +11,12 @@
       fixedHeight: '60px',
       perPage: 16,
       perMove: 6,
-      autoplay: true,
       }"
   >
     @for (image of images(); track $index) {
     <splide-slide>
       <div class="w-full h-full cursor-pointer" [routerLink]="['/archive', image.id]">
-        <img class="object-cover h-full w-full" src="assets/1.jpg" alt="" />
+        <img ngOptimizedImage loading="lazy" class="object-cover" width="80" height="60" [ngSrc]="imageBaseUrl + image.image_name"/>
       </div>
     </splide-slide>
     }

@@ -13,6 +13,8 @@ import { Image } from "../archive/archive.component";
   providers: [DatePipe],
 })
 export class ArchiveDetailComponent {
+  imageBaseUrl = environment.imageBaseUrl;
+
   archiveImageId: string | undefined = undefined;
   image: Image | undefined = undefined;
 
