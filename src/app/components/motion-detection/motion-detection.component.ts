@@ -2,18 +2,21 @@ import { HttpClient } from "@angular/common/http";
 import { Component, AfterViewInit, Renderer2, OnDestroy } from "@angular/core";
 import { Image } from "../../pages/archive/archive.component";
 import { environment } from "../../../environments/environment.development";
+import { NgIf } from "@angular/common";
 
 @Component({
   selector: "app-motion-detection",
   templateUrl: "./motion-detection.component.html",
   styleUrls: ["./motion-detection.component.css"],
   standalone: true,
+  imports: [NgIf],
 })
 export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
   imageSpawned: boolean = false;
   drawInterval: any;
   image: Image | undefined;
   private localStream: MediaStream | null = null;
+  userMediaAvailable: boolean = true;
 
   private apiUrl = environment.apiUrl;
   private bucketUrl = environment.imageBaseUrl;
@@ -170,8 +173,12 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
           this.drawInterval = setInterval(draw, 32);
           this.drawInterval;
         })
-        .catch((error) => console.error("Error accessing webcam:", error));
+        .catch((error) => {
+          this.userMediaAvailable = false;
+          console.error("Error accessing webcam:", error);
+        });
     } else {
+      this.userMediaAvailable = false;
       console.error("Your browser does not support getUserMedia");
     }
   }

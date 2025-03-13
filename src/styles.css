@@ -64,13 +64,6 @@
   object-fit: cover;
 }
 
-#canvasFinal {
-  background-image: url("https://lh3.googleusercontent.com/opBDNnhXBe1aiLOp3C9yatntR-8fQptvgDu8C1LSZM68khdJh6AQgIHdgWU_T80_2MBhQLjgrJwR6mY=w3840-h2160-rw-no");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-}
-
 html,
 body {
   height: 100%;
@@ -79,4 +72,3 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-
