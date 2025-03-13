@@ -1,4 +1,10 @@
-
 <video id="camStream"></video>
 <canvas id="canvas"></canvas>
 <canvas id="canvasFinal"></canvas>
+
+<div
+  *ngIf="!userMediaAvailable"
+  class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white z-10 font-mono_lite"
+>
+  User media is not available, please allow access to the camera
+</div>

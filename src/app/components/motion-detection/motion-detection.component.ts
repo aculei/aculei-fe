@@ -1,21 +1,17 @@
-import {
-  Component,
-  AfterViewInit,
-  Renderer2,
-  isStandalone,
-  OnDestroy,
-} from "@angular/core";
+import { NgIf } from "@angular/common";
+import { Component, AfterViewInit, Renderer2, OnDestroy } from "@angular/core";
 
 @Component({
   selector: "app-motion-detection",
   templateUrl: "./motion-detection.component.html",
   styleUrls: ["./motion-detection.component.css"],
   standalone: true,
+  imports: [NgIf],
 })
 export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
   imageSpawned: boolean = false;
-  private localStream: MediaStream | null = null;
   drawInterval: any;
+  userMediaAvailable: boolean = true;
 
   constructor(private renderer: Renderer2) {}
 
@@ -154,8 +150,12 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
           this.drawInterval = setInterval(draw, 32);
           this.drawInterval;
         })
-        .catch((error) => console.error("Error accessing webcam:", error));
+        .catch((error) => {
+          this.userMediaAvailable = false;
+          console.error("Error accessing webcam:", error);
+        });
     } else {
+      this.userMediaAvailable = false;
       console.error("Your browser does not support getUserMedia");
     }
   }
