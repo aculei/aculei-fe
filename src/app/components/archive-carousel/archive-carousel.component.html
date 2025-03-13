@@ -16,7 +16,7 @@
     @for (image of images(); track $index) {
     <splide-slide>
       <div class="w-full h-full cursor-pointer" (click)="onImageClick(image)">
-        <img ngOptimizedImage loading="lazy" class="object-cover" width="80" height="60" [ngSrc]="imageBaseUrl + image.image_name"/>
+        <img ngOptimizedImage loading="lazy" class="object-cover" width="80" height="60" [ngSrc]="imageBaseUrl + 'cdn-cgi/image/width=160,quality=75/' + image.image_name"/>
       </div>
     </splide-slide>
     }
