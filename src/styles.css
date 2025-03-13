@@ -18,6 +18,24 @@
 /* .background-archive-detail {
   background-image: url('/assets/aculo.png');
 } */
+.splide__slide.is-visible.is-active {
+  outline: none !important;
+  border: none !important;
+}
+
+.splide__arrow--next.transparent-background {
+  background-color: transparent;
+}
+.splide__arrow--prev.transparent-background {
+  background-color: transparent;
+}
+
+.splide__arrow--next.transparent-background svg {
+  fill: white;
+}
+.splide__arrow--prev.transparent-background svg {
+  fill: white;
+}
 
 .splide__arrow--prev.arrow-none {
   display: none !important;

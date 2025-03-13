@@ -1,4 +1,4 @@
-import { Component, input } from "@angular/core";
+import { Component, input, output } from "@angular/core";
 import { RouterLink, RouterLinkActive } from "@angular/router";
 import { NgxSplideComponent, NgxSplideModule } from "ngx-splide";
 import { Image } from "../../pages/archive/archive.component";
@@ -20,6 +20,18 @@ import { IMAGE_CONFIG, NgOptimizedImage } from "@angular/common";
   ],
 })
 export class ArchiveCarouselComponent {
-  images = input<Image[]>();
+  images = input.required<Image[]>();
   imageBaseUrl = environment.imageBaseUrl;
+
+  imageClick = output<{
+    images: Image[];
+    index: number;
+  }>();
+
+  onImageClick(image: Image) {
+    this.imageClick.emit({
+      images: this.images(),
+      index: this.images().indexOf(image),
+    });
+  }
 }

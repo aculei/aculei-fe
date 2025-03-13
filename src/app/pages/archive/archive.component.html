@@ -1,8 +1,6 @@
-<div class="w-screen bg-black font-mono_lite text-2xs">
-  <div
-    class="relative h-full flex flex-col text-gray-300 w-full text-xs pt-24 pb-16"
-  >
-    <div class="w-full md:block hidden relative">
+<div class="w-screen h-full bg-black font-mono_lite text-2xs">
+  <div class="relative h-full flex flex-col text-gray-300 w-full text-xs pb-16">
+    <div class="w-full md:block hidden sticky top-0 z-50 bg-blue-400">
       <div class="bg-green-700 h-4 w-full"></div>
       <div class="w-full flex justify-between absolute z-50">
         <div class="min-w-44"></div>
@@ -21,18 +19,35 @@
           <app-filters-temperature
             [(temperatureFromToFilters)]="temperatureFromToFilters"
           ></app-filters-temperature>
-          <app-filters-moon-phase [(selectedMoonPhasesFilters)]="selectedMoonPhasesFilters"></app-filters-moon-phase>
+          <app-filters-moon-phase
+            [(selectedMoonPhasesFilters)]="selectedMoonPhasesFilters"
+          ></app-filters-moon-phase>
         </div>
       </div>
     </div>
-    @for (camImages of getCams(); track $index) {
+   @for (camImages of getCams(); track $index) {
     <div class="flex gap-8 font-mono_lite mb-1">
       <div>{{ camImages }}</div>
     </div>
     <app-archive-carousel
       [images]="groupedImages[camImages]"
+      (imageClick)="onImageClick($event)"
       class="mb-4"
     ></app-archive-carousel>
+    } @if(currentIndex && currentImages) {
+    <div class="flex w-screen h-full justify-center items-center absolute top-0 left-0 z-40">
+      <app-image-detail-carousel [(imageCurrentIndex)]="currentIndex" [(images)]="currentImages"></app-image-detail-carousel>
+      <!-- <img
+        src="assets/aculo.png"
+        class="max-w-[50%] z-40"
+        alt=""
+      /> -->
+    </div>
     }
   </div>
 </div>
+@if(currentIndex && currentImages) {
+<div>
+  <app-image-detail-video></app-image-detail-video>
+</div>
+}
