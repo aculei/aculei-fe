@@ -1,6 +1,6 @@
 <div
   class="grid grid-cols-12 gap-x-3 fixed top-0 p-4 left-0 z-50 w-screen text-xs text-gray-200 font-mono_lite"
-  [ngClass]="{ 'relative': rlaArchive.isActive}"
+  [ngClass]="{ relative: rlaArchive.isActive }"
 >
   <div
     class="cursor-pointer"
@@ -33,9 +33,16 @@
   <div class=""></div>
   <div class="uppercase max-w-[340px] col-span-3">
     <div class="xl:block hidden">
-      ACULEI is an interactive archive based on huntercameras shoot recorded since
-      2020 around Picco dell`Aquila valley in Umbria, Italy.
+      ACULEI is an interactive archive based on huntercameras shoot recorded
+      since 2020 around Picco dell'Aquila valley in Umbria, Italy.
     </div>
-  </div> 
-  <div class="cursor-pointer flex justify-end">ABOUT</div>
+  </div>
+  <div
+    class="cursor-pointer flex justify-end"
+    routerLinkActive
+    #rlaExperience="routerLinkActive"
+    [routerLink]="['about']"
+  >
+    ABOUT
+  </div>
 </div>
