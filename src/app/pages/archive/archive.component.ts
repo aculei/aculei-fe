@@ -21,6 +21,8 @@ import {
   interval,
   Subscription,
 } from "rxjs";
+import { ImageDetailCarouselComponent } from "../../components/image-detail-carousel/image-detail-carousel.component";
+import { ImageDetailVideoComponent } from "../../components/image-detail-video/image-detail-video.component";
 export interface Image {
   id: string;
   cam: string;
@@ -65,6 +67,8 @@ export interface MoonPhaseFilters {
     FiltersDatepickerComponent,
     FiltersTemperatureComponent,
     FiltersMoonPhaseComponent,
+    ImageDetailCarouselComponent,
+    ImageDetailVideoComponent,
   ],
   templateUrl: "./archive.component.html",
   styleUrl: "./archive.component.css",
@@ -82,6 +86,10 @@ export class ArchiveComponent implements OnInit, OnDestroy {
   selectedMoonPhasesFilters$ = toObservable(this.selectedMoonPhasesFilters);
 
   subscriptions: Record<string, Subscription | undefined> = {};
+
+  showCarouselDetail = false;
+  currentImages: Image[] | undefined;
+  currentIndex: number | undefined;
 
   filters: ArchiveFilters = {
     animal: {
@@ -237,6 +245,13 @@ export class ArchiveComponent implements OnInit, OnDestroy {
     }, {} as Record<string, Image[]>);
 
     return this.groupedImages;
+  }
+
+  onImageClick(event: { images: Image[]; index: number }) {
+    console.log("onImageClick", event);
+    this.showCarouselDetail = true;
+    this.currentIndex = event.index;
+    this.currentImages = event.images;
   }
 
   ngOnDestroy() {
