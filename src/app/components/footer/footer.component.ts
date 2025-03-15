@@ -5,22 +5,24 @@ export interface DatasetInfo {
   [key: string]: string | number;
 }
 @Component({
-    selector: "app-footer",
-    imports: [CommonModule],
-    templateUrl: "./footer.component.html",
-    styleUrl: "./footer.component.css"
+  selector: "app-footer",
+  imports: [CommonModule],
+  templateUrl: "./footer.component.html",
+  styleUrl: "./footer.component.css",
 })
 export class FooterComponent {
   datasetInfo: DatasetInfo = {
     badger: 347,
     buzzard: 63,
     cat: 10,
-    "coordinates of camera 1.0": "43°10'19.2\"N 12°23'53.2\"E",
-    "coordinates of camera 2.0": "43°10'26.3\"N 12°23'53.4\"E",
-    "coordinates of camera 3.0": "43°10'19.0\"N 12°23'49.6\"E",
-    "coordinates of camera 4.0": "43°10'29.6\"N 12°23'54.5\"E",
-    "coordinates of camera 6.0": "43°10'26.2\"N 12°23'52.9\"E",
-    "coordinates of camera 7.0": "43°10'29.4\"N 12°23'44.2\"E",
+    "camera 1": "43°10'19.2\"N 12°23'53.2\"E (DESTROYED BY EXCAVATOR)",
+    "camera 2":
+      "43°10'26.3\"N 12°23'53.4\"E (OVERWHELMED BY THE DRAINAGE CANAL)",
+    "camera 3": "43°10'19.0\"N 12°23'49.6\"E",
+    "camera 4": "43°10'29.6\"N 12°23'54.5\"E",
+    "camera 5": "(STOLEN)",
+    "camera 6": "43°10'26.2\"N 12°23'52.9\"E",
+    "camera 7": "43°10'29.4\"N 12°23'44.2\"E",
     deer: 928,
     fox: 2633,
     hare: 283,
