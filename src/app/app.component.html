@@ -1,4 +1,7 @@
-<app-mobile *ngIf="isMobile"></app-mobile>
+<ng-container *ngIf="isMobile">
+  <app-mobile></app-mobile>
+  <app-footer></app-footer>
+</ng-container>
 
 <ng-container *ngIf="!isMobile">
   <div class="flex flex-col max-h-screen h-screen">
