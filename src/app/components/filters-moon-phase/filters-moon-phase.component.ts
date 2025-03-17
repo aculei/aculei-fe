@@ -1,5 +1,6 @@
 import { CommonModule } from "@angular/common";
-import { Component, model } from "@angular/core";
+import { Component, input, model } from "@angular/core";
+import { Image } from "../../pages/archive/archive.component";
 
 export interface MoonPhase {
   id: number;
@@ -19,6 +20,7 @@ export interface SelectedMoonPhaseFilters {
 })
 export class FiltersMoonPhaseComponent {
   isFilterSelectionOpen = false;
+  selectedImageFilters = input<Image | undefined>();
 
   selectedMoonPhasesFilters = model<SelectedMoonPhaseFilters | undefined>({
     moonPhases: [],
@@ -37,8 +39,14 @@ export class FiltersMoonPhaseComponent {
 
   selectedMoonPhases = new Map<number, boolean>();
 
+  getIconFromName(name: string): string {
+    return this.moonPhases.find((phase) => phase.name === name)?.imageSvg || "";
+  }
+
   toggleFilterSelection() {
-    this.isFilterSelectionOpen = !this.isFilterSelectionOpen;
+    if (this.selectedImageFilters() == undefined) {
+      this.isFilterSelectionOpen = !this.isFilterSelectionOpen;
+    }
   }
 
   toggleMoonPhase(phase: MoonPhase) {

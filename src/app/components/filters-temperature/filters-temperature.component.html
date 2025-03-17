@@ -1,6 +1,4 @@
-<div
-  class="relative inline-block text-left text-xs"
->
+<div class="relative inline-block text-left text-xs">
   <div
     class="min-w-36 hover:text-black cursor-pointer"
     (click)="toggleFilterSelection()"
@@ -8,10 +6,12 @@
     <div
       class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none uppercase"
     >
-      @if (temperatureFromToFilters()?.from === this.lowerBound() && temperatureFromToFilters()?.to === this.upperBound()) { Entire range }
-      @else { 
-        {{ temperatureFromToFilters()?.from }}° - {{ temperatureFromToFilters()?.to }}°
-      }
+      @if (selectedImageFilters()?.temperature) {
+      {{ selectedImageFilters()?.temperature }} }@else { @if
+      (temperatureFromToFilters()?.from === this.lowerBound() &&
+      temperatureFromToFilters()?.to === this.upperBound()) { Entire range }
+      @else { {{ temperatureFromToFilters()?.from }}° -
+      {{ temperatureFromToFilters()?.to }}° }
       <svg
         class="-mr-1 size-5 transition-all duration-300"
         viewBox="0 0 20 20"
@@ -29,6 +29,7 @@
           clip-rule="evenodd"
         />
       </svg>
+      }
     </div>
   </div>
   @if (isFilterSelectionOpen) {

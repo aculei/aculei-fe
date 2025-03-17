@@ -7,13 +7,21 @@
       class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none uppercase"
     >
       <div class="bg-green-700 text-white rounded flex gap-1 hover:text-black">
-        @if (getSelectedMoonPhases().length === 0) {
+        @if (selectedImageFilters()?.moon_phase) {
+        <img
+          class="w-4 h-4"
+          [src]="getIconFromName(selectedImageFilters()?.moon_phase!)"
+          alt=""
+        />
+
+        } @else { @if (getSelectedMoonPhases().length === 0) {
         <span>Moon Phase</span>
         } @else { @for (selectedPhase of getSelectedMoonPhases(); track $index)
         {
         <img class="w-4 h-4" [src]="selectedPhase.imageSvg" alt="" />
-        } }
+        } } }
       </div>
+      @if (!selectedImageFilters()?.moon_phase) {
       <svg
         class="-mr-1 size-5 transition-all duration-300"
         viewBox="0 0 20 20"
@@ -30,6 +38,7 @@
           clip-rule="evenodd"
         />
       </svg>
+    }
     </div>
   </div>
   @if (isFilterSelectionOpen) {

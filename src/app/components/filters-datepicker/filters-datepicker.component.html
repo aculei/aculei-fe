@@ -6,7 +6,9 @@
     <div
       class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none uppercase"
     >
-      @if (start() && end()) { {{ start() | date : "dd/MM/yyyy" }} -
+      @if (selectedImageFilters()?.date) {
+      {{ selectedImageFilters()?.date | date : "dd/MM/yyyy" }}
+      }@else { @if (start() && end()) { {{ start() | date : "dd/MM/yyyy" }} -
       {{ end() | date : "dd/MM/yyyy" }} } @else { Entire project }
       <svg
         class="-mr-1 size-5 transition-all duration-300"
@@ -25,6 +27,7 @@
           clip-rule="evenodd"
         />
       </svg>
+      }
     </div>
   </div>
   @if (isFilterSelectionOpen) {

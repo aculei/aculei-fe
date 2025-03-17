@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
-import { Component, model, output } from "@angular/core";
+import { Component, input, model, output } from "@angular/core";
 import { DateRangePickerComponent } from "../date-range-picker/date-range-picker.component";
+import { Image } from "../../pages/archive/archive.component";
 
 @Component({
   selector: "app-filters-datepicker",
@@ -9,13 +10,16 @@ import { DateRangePickerComponent } from "../date-range-picker/date-range-picker
   styleUrl: "./filters-datepicker.component.css",
 })
 export class FiltersDatepickerComponent {
+  selectedImageFilters = input<Image | undefined>();
   isFilterSelectionOpen = false;
   start = model<Date | undefined>();
   end = model<Date | undefined>();
   dateChange = output<boolean>();
 
   toggleFilterSelection() {
-    this.isFilterSelectionOpen = !this.isFilterSelectionOpen;
+    if (this.selectedImageFilters() == undefined) {
+      this.isFilterSelectionOpen = !this.isFilterSelectionOpen;
+    }
   }
 
   setFirstYear() {

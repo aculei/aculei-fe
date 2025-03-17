@@ -3,6 +3,7 @@ import { Component, model, output, OnInit, input } from "@angular/core";
 import { toObservable } from "@angular/core/rxjs-interop";
 import { FormsModule } from "@angular/forms";
 import { combineLatest, debounce, distinctUntilChanged, interval } from "rxjs";
+import { Image } from "../../pages/archive/archive.component";
 
 export interface FiltersTemperatureFromTo {
   from: number;
@@ -15,8 +16,8 @@ export interface FiltersTemperatureFromTo {
   styleUrl: "./filters-temperature.component.css",
 })
 export class FiltersTemperatureComponent implements OnInit {
+  selectedImageFilters = input<Image | undefined>();
   isFilterSelectionOpen = false;
-
   lowerBound = input<number>(0);
   upperBound = input<number>(34);
 
@@ -42,7 +43,9 @@ export class FiltersTemperatureComponent implements OnInit {
   }
 
   toggleFilterSelection() {
-    this.isFilterSelectionOpen = !this.isFilterSelectionOpen;
+    if (this.selectedImageFilters() == undefined) {
+      this.isFilterSelectionOpen = !this.isFilterSelectionOpen;
+    }
   }
 
   onFromChange() {

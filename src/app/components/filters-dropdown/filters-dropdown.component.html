@@ -6,6 +6,9 @@
     <div
       class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none uppercase"
     >
+      @if (selectedImageFilters()?.predicted_animal) {
+      {{ selectedImageFilters()?.predicted_animal }}
+      }@else {
       {{ getDropdownLabel() }}
       <svg
         class="-mr-1 size-5 transition-all duration-300"
@@ -15,7 +18,7 @@
         data-slot="icon"
         [ngClass]="{
           'transform rotate-180':
-            isFilterSelectionOpen,
+          isFilterSelectionOpen,
         }"
       >
         <path
@@ -24,6 +27,7 @@
           clip-rule="evenodd"
         />
       </svg>
+      }
     </div>
   </div>
 

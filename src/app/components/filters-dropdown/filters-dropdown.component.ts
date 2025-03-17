@@ -2,6 +2,7 @@ import { CommonModule } from "@angular/common";
 import { Component, model, output, OnInit, input } from "@angular/core";
 import { combineLatest, debounce, distinctUntilChanged, interval } from "rxjs";
 import { toObservable } from "@angular/core/rxjs-interop";
+import { Image } from "../../pages/archive/archive.component";
 export interface SelectedAnimalsFilters {
   animals: string[] | undefined;
 }
@@ -13,6 +14,7 @@ export interface SelectedAnimalsFilters {
   styleUrl: "./filters-dropdown.component.css",
 })
 export class FiltersDropdownComponent implements OnInit {
+  selectedImageFilters = input<Image | undefined>();
   animals = input<string[] | undefined>();
   selectedAnimalsFilters = model<SelectedAnimalsFilters | undefined>({
     animals: [],
@@ -34,7 +36,9 @@ export class FiltersDropdownComponent implements OnInit {
   }
 
   toggleFilterSelection() {
-    this.isFilterSelectionOpen = !this.isFilterSelectionOpen;
+    if (this.selectedImageFilters() == undefined) {
+      this.isFilterSelectionOpen = !this.isFilterSelectionOpen;
+    }
   }
 
   toggleAnimalSelection(animal: string) {

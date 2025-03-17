@@ -23,6 +23,9 @@ import {
 } from "rxjs";
 import { ImageDetailCarouselComponent } from "../../components/image-detail-carousel/image-detail-carousel.component";
 import { ImageDetailVideoComponent } from "../../components/image-detail-video/image-detail-video.component";
+import { CommonModule } from "@angular/common";
+import { ArchiveImageCarouselComponent } from "../../components/archive-image-carousel/archive-image-carousel.component";
+import { ArchiveCarouselRowComponent } from "../../components/archive-carousel-row/archive-carousel-row.component";
 export interface Image {
   id: string;
   cam: string;
@@ -69,13 +72,16 @@ export interface MoonPhaseFilters {
     FiltersMoonPhaseComponent,
     ImageDetailCarouselComponent,
     ImageDetailVideoComponent,
+    CommonModule,
+    ArchiveImageCarouselComponent,
+    ArchiveCarouselRowComponent,
   ],
   templateUrl: "./archive.component.html",
   styleUrl: "./archive.component.css",
 })
 export class ArchiveComponent implements OnInit, OnDestroy {
   animalsFilters = model<SelectedAnimalsFilters | undefined>();
-
+  selectedImageFilters = model<Image | undefined>();
   selectedAnimalsFilters = model<SelectedAnimalsFilters | undefined>();
   selectedAnimalsFilters$ = toObservable(this.selectedAnimalsFilters);
 
@@ -248,15 +254,19 @@ export class ArchiveComponent implements OnInit, OnDestroy {
   }
 
   onImageClick(event: { images: Image[]; index: number }) {
-    console.log("onImageClick", event);
     this.showCarouselDetail = true;
     this.currentIndex = event.index;
     this.currentImages = event.images;
+    this.selectedImageFilters.set(event.images[event.index]);
   }
 
   ngOnDestroy() {
     Object.keys(this.subscriptions).forEach((key) => {
       this.subscriptions[key]?.unsubscribe();
     });
+  }
+
+  closeImageDetail() {
+    this.selectedImageFilters.set(undefined);
   }
 }

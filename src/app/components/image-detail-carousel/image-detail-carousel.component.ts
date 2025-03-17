@@ -1,6 +1,7 @@
 import { NgOptimizedImage } from "@angular/common";
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   model,
   OnInit,
@@ -30,5 +31,20 @@ export class ImageDetailCarouselComponent implements OnInit {
     this.imageCurrentIndex.set(undefined);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.splide()
+      ?.getSplideInstance()
+      .on("ready", () => {
+        this.splide()
+          ?.getSplideInstance()
+          .go(this.imageCurrentIndex() || 2);
+      });
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.splide()?.getSplideInstance().go(this.imageCurrentIndex()!);
+      console.log(this.imageCurrentIndex());
+    }, 100);
+  }
 }

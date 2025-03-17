@@ -1,9 +1,8 @@
-@if (imageCurrentIndex() && images() && (images()?.length ?? 0) > 0){
+@if (imageCurrentIndex() != undefined && images() != undefined && (images()?.length ?? 0) > 0){
 <div class="w-full h-full">
   <splide
     #splide
     [options]="{
-      start: imageCurrentIndex(),
       pagination: false,
       gap: '0rem',
       classes:{
@@ -23,6 +22,9 @@
             class="text-white absolute top-0 right-0 text-2xl p-1"
           >
             [X]
+          </div>
+          <div class="text-white absolute top-0 left-0 text-2xl p-1">
+            {{ imageCurrentIndex()! }}
           </div>
           <img
             ngOptimizedImage

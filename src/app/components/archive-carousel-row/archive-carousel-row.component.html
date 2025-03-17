@@ -1,0 +1,16 @@
+<div
+  class="overflow-hidden w-full relative whitespace-nowrap"
+  (mouseover)="onMouseOver()"
+  (mouseleave)="onMouseLeave()"
+>
+  <div #carousel class="flex space-x-2 overflow-x-scroll no-scrollbar">
+    @for (image of images(); track $index) {
+    <ng-container>
+      <img
+        [src]="imageBaseUrl + image.image_name"
+        class="w-[80px] h-[60px] cursor-pointer object-cover"
+        (click)="onImageClick(image)"
+      /> </ng-container
+    >}
+  </div>
+</div>
