@@ -4,12 +4,13 @@
     class="h-full w-full cursor-pointer flex justify-center items-center relative"
   >
     <div class="w-[50%] relative">
-      <div
+      <button
         (click)="closeImageDetail()"
         class="text-white absolute top-0 right-0 text-2xl p-1 mix-blend-difference"
+        title="Close Image [Esc]"
       >
         [X]
-      </div>
+      </button>
       <div
         class="text-white absolute top-0 left-0 text-2xl p-1 mix-blend-difference"
       >
@@ -19,6 +20,7 @@
         ngOptimizedImage
         loading="lazy"
         class="z-40 w-full"
+        (click)="handleImageClick($event)"
         [src]="imageBaseUrl + images()?.[imageCurrentIndex()!]?.image_name"
       />
     </div>
@@ -27,6 +29,7 @@
   <button
     (click)="prevImage()"
     class="absolute top-1/2 left-2 transform -translate-y-1/2 text-white p-2 rounded-full transition"
+    title="Previous Image [Left Arrow]"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -46,6 +49,7 @@
   <button
     (click)="nextImage()"
     class="absolute top-1/2 right-2 transform -translate-y-1/2 text-white p-2 rounded-full transition"
+    title="Next Image [Right Arrow]"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"

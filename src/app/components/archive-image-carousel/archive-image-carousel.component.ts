@@ -1,4 +1,4 @@
-import { Component, model, OnInit } from "@angular/core";
+import { Component, HostListener, model, OnInit } from "@angular/core";
 import { environment } from "../../../environments/environment.development";
 import { Image } from "../../pages/archive/archive.component";
 import { CommonModule } from "@angular/common";
@@ -42,5 +42,32 @@ export class ArchiveImageCarouselComponent implements OnInit {
     this.images.set(undefined);
     this.imageCurrentIndex.set(undefined);
     this.selectedImageFilters.set(undefined);
+  }
+
+  handleImageClick(event: MouseEvent) {
+    const element = event.target as HTMLElement;
+    const rect = element.getBoundingClientRect();
+    const xPos = event.clientX - rect.left;
+
+    if (element.clientWidth / 2 >= xPos) {
+      this.prevImage();
+    } else {
+      this.nextImage();
+    }
+  }
+
+  @HostListener("document:keydown.escape", ["$event"])
+  handleEscapeKey(event: KeyboardEvent) {
+    this.closeImageDetail();
+  }
+
+  @HostListener("document:keydown.arrowleft", ["$event"])
+  handleArrowLeftKey(event: KeyboardEvent) {
+    this.prevImage();
+  }
+
+  @HostListener("document:keydown.arrowright", ["$event"])
+  handleArrowRightKey(event: KeyboardEvent) {
+    this.nextImage();
   }
 }
