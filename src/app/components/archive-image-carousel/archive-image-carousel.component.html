@@ -6,12 +6,14 @@
     <div class="w-[50%] relative">
       <div
         (click)="closeImageDetail()"
-        class="text-white absolute top-0 right-0 text-2xl p-1"
+        class="text-white absolute top-0 right-0 text-2xl p-1 mix-blend-difference"
       >
         [X]
       </div>
-      <div class="text-white absolute top-0 left-0 text-2xl p-1">
-        {{ imageCurrentIndex()! }}
+      <div
+        class="text-white absolute top-0 left-0 text-2xl p-1 mix-blend-difference"
+      >
+        [{{ imageCurrentIndex()! + 1 }}]
       </div>
       <img
         ngOptimizedImage
