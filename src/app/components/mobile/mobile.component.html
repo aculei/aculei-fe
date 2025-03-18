@@ -1,13 +1,9 @@
 <div
-  class="font-mono_lite text-white h-[calc(100vh-8rem)] flex flex-col justify-between text-xs uppercase p-1"
+  class="h-full w-full bg-white font-mono_lite text-white flex flex-col justify-center items-start text-xs uppercase bg-cover mix-blend-difference"
+  [ngStyle]="{ 'background-image': 'url(' + imageUrl + ')' }"
 >
-  <a href="mailto:aculei@aculei.xyz">aculei&#64;aculei.xyz</a>
-  <p>
-    Glad to see you here! we don't support mobile visitors since the archive
-    deserves a bigger screen please come back from desktop.
-  </p>
-  <p>
-    ACULEI is an interactive archive based on huntercameras shoot recorded since
-    2020 around Picco dell'Aquila valley in Umbria, Italy.
-  </p>
+  <div class="mix-blend-difference p-2">
+    <p>Glad to see you here!</p>
+    <p>The archive is designed for desktop browsers only.</p>
+  </div>
 </div>
