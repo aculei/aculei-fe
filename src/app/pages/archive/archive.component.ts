@@ -19,6 +19,7 @@ import {
   distinct,
   distinctUntilChanged,
   interval,
+  skip,
   Subscription,
 } from "rxjs";
 import { ImageDetailCarouselComponent } from "../../components/image-detail-carousel/image-detail-carousel.component";
@@ -118,17 +119,21 @@ export class ArchiveComponent implements OnInit, OnDestroy {
       this.temperatureFromToFilters$
         .pipe(
           debounce(() => interval(250)),
-          distinctUntilChanged()
+          distinctUntilChanged(),
+          skip(1)
         )
         .subscribe(() => {
           this.fetchArchive();
         });
-    this.selectedAnimalsFilters$.pipe(distinctUntilChanged()).subscribe(() => {
-      this.fetchArchive();
-    });
+
+    this.selectedAnimalsFilters$
+      .pipe(distinctUntilChanged(), skip(1))
+      .subscribe(() => {
+        this.fetchArchive();
+      });
 
     this.selectedMoonPhasesFilters$
-      .pipe(distinctUntilChanged())
+      .pipe(distinctUntilChanged(), skip(1))
       .subscribe(() => {
         this.fetchArchive();
       });
