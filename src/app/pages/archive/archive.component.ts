@@ -236,7 +236,7 @@ export class ArchiveComponent implements OnInit, OnDestroy {
   groupedImages: Record<string, Image[]> = {};
 
   getCams(): string[] {
-    return Object.keys(this.groupedImages);
+    return Object.keys(this.groupedImages).sort();
   }
 
   groupImagesByCam(images: Image[]) {
