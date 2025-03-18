@@ -43,7 +43,7 @@
       @for (animal of animals(); track $index) {
       <div
         href="#"
-        class="block px-2 py-2 uppercase text-white select-none cursor-pointer"
+        class="block px-2 py-2 uppercase text-white select-none cursor-pointer hover:bg-green-700"
         (click)="toggleAnimalSelection(animal)"
         [ngClass]="{
           'bg-green-700': isSelected(animal),

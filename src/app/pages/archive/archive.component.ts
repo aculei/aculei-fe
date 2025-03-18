@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Component, model, OnDestroy, OnInit } from "@angular/core";
 import { environment } from "../../../environments/environment.development";
-import { ArchiveCarouselComponent } from "../../components/archive-carousel/archive-carousel.component";
 import { FiltersDatepickerComponent } from "../../components/filters-datepicker/filters-datepicker.component";
 import {
   FiltersMoonPhaseComponent,
@@ -16,13 +15,11 @@ import {
 import { toObservable } from "@angular/core/rxjs-interop";
 import {
   debounce,
-  distinct,
   distinctUntilChanged,
   interval,
   skip,
   Subscription,
 } from "rxjs";
-import { ImageDetailCarouselComponent } from "../../components/image-detail-carousel/image-detail-carousel.component";
 import { ImageDetailVideoComponent } from "../../components/image-detail-video/image-detail-video.component";
 import { CommonModule } from "@angular/common";
 import { ArchiveImageCarouselComponent } from "../../components/archive-image-carousel/archive-image-carousel.component";
@@ -204,7 +201,8 @@ export class ArchiveComponent implements OnInit, OnDestroy {
       moon_phase: this.selectedMoonPhasesFilters()?.moonPhases,
     };
 
-    let params = new HttpParams().set("page", "0").set("size", "99999");
+    // let params = new HttpParams().set("page", "0").set("size", "99999");
+    let params = new HttpParams();
 
     Object.keys(filters).forEach((key) => {
       const value = filters[key as keyof ArchiveSelectedFilters];
