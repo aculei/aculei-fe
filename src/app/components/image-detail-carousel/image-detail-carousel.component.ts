@@ -10,12 +10,11 @@ import {
 import { RouterLink } from "@angular/router";
 import { NgxSplideComponent, NgxSplideModule } from "ngx-splide";
 import { environment } from "../../../environments/environment";
-import Splide from "@splidejs/splide";
 import { Image } from "../../pages/archive/archive.component";
 
 @Component({
   selector: "app-image-detail-carousel",
-  imports: [NgxSplideModule, RouterLink, NgOptimizedImage],
+  imports: [NgxSplideModule],
   templateUrl: "./image-detail-carousel.component.html",
   styleUrl: "./image-detail-carousel.component.css",
 })

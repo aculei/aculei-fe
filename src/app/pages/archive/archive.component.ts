@@ -65,12 +65,10 @@ export interface MoonPhaseFilters {
 @Component({
   selector: "app-archive",
   imports: [
-    ArchiveCarouselComponent,
     FiltersDropdownComponent,
     FiltersDatepickerComponent,
     FiltersTemperatureComponent,
     FiltersMoonPhaseComponent,
-    ImageDetailCarouselComponent,
     ImageDetailVideoComponent,
     CommonModule,
     ArchiveImageCarouselComponent,
