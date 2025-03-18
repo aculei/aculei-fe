@@ -27,6 +27,11 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
     if (this.drawInterval) {
       clearInterval(this.drawInterval);
     }
+
+    const images = document.querySelectorAll("img");
+    images.forEach((img) => {
+      this.renderer.removeChild(document.body, img);
+    });
   }
 
   initMotionDetection() {
