@@ -199,27 +199,33 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
     const img = this.renderer.createElement("img");
     img.src = this.bucketUrl + this.image?.image_name;
     img.style.position = "absolute";
-    img.style.width = "450px";
-    const imgWidth = 450;
-    const imgHeight = 450;
-
-    let left = col * gridWidth + (gridWidth / 2 - imgWidth / 2);
-    let top = row * gridHeight + (gridHeight / 2 - imgHeight / 2);
-
-    const maxLeft = window.innerWidth - imgWidth - 20;
-    const maxTop = window.innerHeight - imgHeight - 20;
-
-    left = Math.max(0, Math.min(left, maxLeft));
-    top = Math.max(0, Math.min(top, maxTop));
-
-    img.style.left = `${left}px`;
-    img.style.top = `${top}px`;
+    img.style.visibility = "hidden";
 
     this.renderer.appendChild(document.body, img);
 
-    setTimeout(() => {
-      this.renderer.removeChild(document.body, img);
-      this.imageSpawned = false;
-    }, 5000);
+    img.onload = () => {
+      let imgWidth = img.naturalWidth / 6;
+      let imgHeight = img.naturalHeight / 6;
+
+      let left = col * gridWidth + (gridWidth / 2 - imgWidth / 2);
+      let top = row * gridHeight + (gridHeight / 2 - imgHeight / 2);
+
+      const maxLeft = window.innerWidth - imgWidth;
+      const maxTop = window.innerHeight - imgHeight;
+
+      left = Math.max(10, Math.min(left, maxLeft));
+      top = Math.max(10, Math.min(top, maxTop));
+
+      img.style.width = `${imgWidth}px`;
+      img.style.height = `${imgHeight}px`;
+      img.style.left = `${left}px`;
+      img.style.top = `${top}px`;
+      img.style.visibility = "visible";
+
+      setTimeout(() => {
+        this.renderer.removeChild(document.body, img);
+        this.imageSpawned = false;
+      }, 5000);
+    };
   }
 }
