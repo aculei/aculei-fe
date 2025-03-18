@@ -1,10 +1,7 @@
-import {
-  Component,
-  AfterViewInit,
-  Renderer2,
-  isStandalone,
-  OnDestroy,
-} from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Component, AfterViewInit, Renderer2, OnDestroy } from "@angular/core";
+import { Image } from "../../pages/archive/archive.component";
+import { environment } from "../../../environments/environment.development";
 
 @Component({
   selector: "app-motion-detection",
@@ -14,10 +11,13 @@ import {
 })
 export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
   imageSpawned: boolean = false;
-  private localStream: MediaStream | null = null;
   drawInterval: any;
+  image: Image | undefined;
 
-  constructor(private renderer: Renderer2) {}
+  private apiUrl = environment.apiUrl;
+  private bucketUrl = environment.imageBaseUrl;
+
+  constructor(private renderer: Renderer2, private http: HttpClient) {}
 
   ngAfterViewInit(): void {
     this.initMotionDetection();
@@ -46,9 +46,8 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
     let frames: ImageData[] = [];
     let activeFrame = 0;
 
-    // Definisci la griglia
-    const rows = 10; // Numero di righe della griglia
-    const cols = 10; // Numero di colonne della griglia
+    const rows = 10;
+    const cols = 10;
     const gridWidth = window.innerWidth / cols;
     const gridHeight = window.innerHeight / rows;
 
@@ -104,11 +103,11 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
               movementGrid[row][col]++;
             }
 
-            const grayValue = 128;
-            currentFrame.data[i] = grayValue;
-            currentFrame.data[i + 1] = grayValue;
-            currentFrame.data[i + 2] = grayValue;
-            currentFrame.data[i + 3] = 100;
+            // const grayValue = 128;
+            currentFrame.data[i] = 46;
+            currentFrame.data[i + 1] = 139;
+            currentFrame.data[i + 2] = 91;
+            currentFrame.data[i + 3] = 255;
           } else {
             currentFrame.data[i] =
               0.5 * (100 - currentFrame.data[i]) + 0.5 * previousFrame.data[i];
@@ -118,7 +117,7 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
             currentFrame.data[i + 2] =
               0.5 * (100 - currentFrame.data[i + 2]) +
               0.5 * previousFrame.data[i + 2];
-            currentFrame.data[i + 3] = 255; // Mantieni opacità
+            currentFrame.data[i + 3] = 255;
           }
         }
 
@@ -136,7 +135,7 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
           }
         }
 
-        if (maxMovement > 0 && !this.imageSpawned) {
+        if (maxMovement > 10 && !this.imageSpawned) {
           this.spawnImage(maxRow, maxCol, gridWidth, gridHeight);
         }
 
@@ -160,21 +159,52 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  fetchImage() {
+    this.http.get<Image>(`${this.apiUrl}/v1/experience/random`).subscribe({
+      next: (response) => {
+        this.image = {
+          id: response.id || "",
+          cam: response.cam || "",
+          date: response.date || "",
+          moon_phase: response.moon_phase || "",
+          temperature: response.temperature || 0,
+          predicted_animal: response.predicted_animal || "",
+          image_name: response.image_name || "",
+        };
+      },
+      error: (error) => {
+        console.error("Error fetching image:", error);
+      },
+    });
+  }
+
   spawnImage(row: number, col: number, gridWidth: number, gridHeight: number) {
     this.imageSpawned = true;
 
     const img = this.renderer.createElement("img");
-    img.src = "assets/volpe.jpg";
+    img.src = this.bucketUrl + this.image?.image_name;
     img.style.position = "absolute";
     img.style.width = "450px";
-    img.style.left = `${col * gridWidth + (gridWidth / 2 - 75)}px`;
-    img.style.top = `${row * gridHeight + (gridHeight / 2 - 75)}px`;
+    const imgWidth = 450;
+    const imgHeight = 450;
+
+    let left = col * gridWidth + (gridWidth / 2 - imgWidth / 2);
+    let top = row * gridHeight + (gridHeight / 2 - imgHeight / 2);
+
+    const maxLeft = window.innerWidth - imgWidth - 20;
+    const maxTop = window.innerHeight - imgHeight - 20;
+
+    left = Math.max(0, Math.min(left, maxLeft));
+    top = Math.max(0, Math.min(top, maxTop));
+
+    img.style.left = `${left}px`;
+    img.style.top = `${top}px`;
 
     this.renderer.appendChild(document.body, img);
 
     setTimeout(() => {
       this.renderer.removeChild(document.body, img);
       this.imageSpawned = false;
-    }, 2000);
+    }, 5000);
   }
 }
