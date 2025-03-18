@@ -78,6 +78,10 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
         );
         const previousFrame = frames[activeFrame];
 
+        if (!previousFrame) {
+          return;
+        }
+
         for (let i = 0; i < rows; i++) {
           for (let j = 0; j < cols; j++) {
             movementGrid[i][j] = 0;
@@ -135,7 +139,7 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
           }
         }
 
-        if (maxMovement > 10 && !this.imageSpawned) {
+        if (maxMovement > 25 && !this.imageSpawned) {
           this.spawnImage(maxRow, maxCol, gridWidth, gridHeight);
         }
 
@@ -160,7 +164,7 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
   }
 
   fetchImage() {
-    this.http.get<Image>(`${this.apiUrl}/v1/experience/random`).subscribe({
+    this.http.get<Image>(`${this.apiUrl}experience/random`).subscribe({
       next: (response) => {
         this.image = {
           id: response.id || "",
@@ -179,6 +183,12 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
   }
 
   spawnImage(row: number, col: number, gridWidth: number, gridHeight: number) {
+    this.fetchImage();
+
+    if (!this.image) {
+      return;
+    }
+
     this.imageSpawned = true;
 
     const img = this.renderer.createElement("img");
