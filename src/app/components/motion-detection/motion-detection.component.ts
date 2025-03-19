@@ -144,7 +144,7 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
           }
         }
 
-        if (maxMovement > 25 && !this.imageSpawned) {
+        if (maxMovement > 100 && !this.imageSpawned) {
           this.spawnImage(maxRow, maxCol, gridWidth, gridHeight);
         }
 
