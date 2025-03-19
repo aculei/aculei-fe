@@ -13,6 +13,7 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
   imageSpawned: boolean = false;
   drawInterval: any;
   image: Image | undefined;
+  private localStream: MediaStream | null = null;
 
   private apiUrl = environment.apiUrl;
   private bucketUrl = environment.imageBaseUrl;
@@ -32,6 +33,12 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
     images.forEach((img) => {
       this.renderer.removeChild(document.body, img);
     });
+
+    if (this.localStream) {
+      this.localStream.getTracks().forEach((track) => {
+        track.stop();
+      });
+    }
   }
 
   initMotionDetection() {
@@ -157,6 +164,7 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
         .getUserMedia({ video: true })
         .then((stream) => {
           localStream = stream;
+          this.localStream = stream;
           camStream.srcObject = stream;
           camStream.play();
           this.drawInterval = setInterval(draw, 32);
