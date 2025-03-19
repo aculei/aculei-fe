@@ -2,11 +2,10 @@ import { CommonModule } from "@angular/common";
 import { Component, input, model, output, signal } from "@angular/core";
 import { DateRangePickerComponent } from "../date-range-picker/date-range-picker.component";
 import { Image } from "../../pages/archive/archive.component";
-import { ClickOutsideDirective } from "../../directive/click-outside.directive";
 
 @Component({
   selector: "app-filters-datepicker",
-  imports: [CommonModule, DateRangePickerComponent, ClickOutsideDirective],
+  imports: [CommonModule, DateRangePickerComponent],
   templateUrl: "./filters-datepicker.component.html",
   styleUrl: "./filters-datepicker.component.css",
 })
