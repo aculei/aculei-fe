@@ -225,7 +225,7 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
       setTimeout(() => {
         this.renderer.removeChild(document.body, img);
         this.imageSpawned = false;
-      }, 5000);
+      }, 2500);
     };
   }
 }
