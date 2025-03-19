@@ -5,8 +5,8 @@
     <div class="w-full md:block hidden sticky top-0 z-50">
       <div class="bg-green-700 h-4 w-full"></div>
       <div class="w-full flex justify-between absolute z-50">
-        <div class="min-w-44"></div>
-        <div class="flex gap-4">
+        <div class="min-w-0 lg:min-w-44"></div>
+        <div class="flex lg:gap-4">
           <app-filters-dropdown
             [animals]="filters.animal?.values"
             [(selectedAnimalsFilters)]="selectedAnimalsFilters"
@@ -19,7 +19,7 @@
             [selectedImageFilters]="selectedImageFilters()"
           ></app-filters-datepicker>
         </div>
-        <div class="flex gap-4">
+        <div class="flex lg:gap-4">
           <app-filters-temperature
             [(temperatureFromToFilters)]="temperatureFromToFilters"
             [selectedImageFilters]="selectedImageFilters()"
