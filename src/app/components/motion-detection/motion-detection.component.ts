@@ -17,6 +17,7 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
   image: Image | undefined;
   private localStream: MediaStream | null = null;
   userMediaAvailable: boolean = true;
+  private localStream: MediaStream | null = null;
 
   private apiUrl = environment.apiUrl;
   private bucketUrl = environment.imageBaseUrl;
