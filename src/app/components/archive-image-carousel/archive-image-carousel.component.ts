@@ -28,6 +28,11 @@ export class ArchiveImageCarouselComponent implements OnInit {
           this.images()!.length
       );
     }
+
+    const currentIndex = this.imageCurrentIndex();
+    if (currentIndex !== undefined && this.images()) {
+      this.selectedImageFilters.set(this.images()![currentIndex]);
+    }
   }
 
   nextImage() {
@@ -35,6 +40,11 @@ export class ArchiveImageCarouselComponent implements OnInit {
       this.imageCurrentIndex.set(
         (this.imageCurrentIndex()! + 1) % this.images()!.length
       );
+    }
+
+    const currentIndex = this.imageCurrentIndex();
+    if (currentIndex !== undefined && this.images()) {
+      this.selectedImageFilters.set(this.images()![currentIndex]);
     }
   }
 

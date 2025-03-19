@@ -1,7 +1,11 @@
 <div
   class="relative inline-block text-left text-xs"
-  (mouseenter)="isFilterSelectionOpen = true"
-  (mouseleave)="isFilterSelectionOpen = false"
+  (mouseenter)="
+    !selectedImageFilters()?.predicted_animal && (isFilterSelectionOpen = true)
+  "
+  (mouseleave)="
+    !selectedImageFilters()?.predicted_animal && (isFilterSelectionOpen = false)
+  "
 >
   <div class="min-w-64 hover:text-black cursor-pointer">
     <div

@@ -1,11 +1,13 @@
 <div
   class="relative inline-block text-left text-xs"
-  (mouseenter)="isFilterSelectionOpen = true"
-  (mouseleave)="isFilterSelectionOpen = false"
+  (mouseenter)="!selectedImageFilters()?.date && (isFilterSelectionOpen = true)"
+  (mouseleave)="
+    !selectedImageFilters()?.date && (isFilterSelectionOpen = false)
+  "
 >
   <div class="min-w-72 hover:text-black cursor-pointer">
     <div
-      class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none uppercase h-7 min-h-7"
+      class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none uppercase"
     >
       @if (selectedImageFilters()?.date) {
       {{ selectedImageFilters()?.date | date : "dd/MM/yyyy" }}

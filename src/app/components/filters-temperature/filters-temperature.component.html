@@ -1,17 +1,18 @@
 <div
   class="relative inline-block text-left text-xs"
-  (mouseenter)="isFilterSelectionOpen = true"
-  (mouseleave)="isFilterSelectionOpen = false"
+  (mouseenter)="!selectedImageFilters() && (isFilterSelectionOpen = true)"
+  (mouseleave)="!selectedImageFilters() && (isFilterSelectionOpen = false)"
 >
   <div class="min-w-36 hover:text-black cursor-pointer">
     <div
       class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none uppercase"
     >
-      @if (selectedImageFilters()?.temperature) {
-      {{ selectedImageFilters()?.temperature }} }@else { @if
-      (temperatureFromToFilters()?.from === this.lowerBound() &&
-      temperatureFromToFilters()?.to === this.upperBound()) { Entire range }
-      @else { {{ temperatureFromToFilters()?.from }}° -
+      @if (selectedImageFilters()) { @if (selectedImageFilters()?.temperature) {
+      {{ selectedImageFilters()?.temperature }}
+      } @else { - } } @else { @if (temperatureFromToFilters()?.from ===
+      this.lowerBound() && temperatureFromToFilters()?.to === this.upperBound())
+      { Entire range } @else {
+      {{ temperatureFromToFilters()?.from }}° -
       {{ temperatureFromToFilters()?.to }}° }
       <svg
         class="-mr-1 size-5 transition-all duration-300"
