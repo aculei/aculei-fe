@@ -208,8 +208,11 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
     img.src = this.bucketUrl + this.image?.image_name;
     img.style.position = "absolute";
     img.style.visibility = "hidden";
+    img.style.transition = "all 0.3s ease-in-out";
 
     this.renderer.appendChild(document.body, img);
+
+    let timeoutId: any;
 
     img.onload = () => {
       let imgWidth = img.naturalWidth / 6;
@@ -219,7 +222,7 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
       let top = row * gridHeight + (gridHeight / 2 - imgHeight / 2);
 
       const maxLeft = window.innerWidth - imgWidth;
-      const maxTop = window.innerHeight - imgHeight;
+      const maxTop = window.innerHeight - imgHeight - 80;
 
       left = Math.max(10, Math.min(left, maxLeft));
       top = Math.max(10, Math.min(top, maxTop));
@@ -229,8 +232,29 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
       img.style.left = `${left}px`;
       img.style.top = `${top}px`;
       img.style.visibility = "visible";
+      img.style.cursor = "pointer";
 
-      setTimeout(() => {
+      img.addEventListener("mousedown", () => {
+        clearTimeout(timeoutId);
+        img.style.width = "80%";
+        img.style.height = "80%";
+        img.style.left = "10%";
+        img.style.top = "10%";
+      });
+
+      img.addEventListener("mouseup", () => {
+        img.style.width = `${imgWidth}px`;
+        img.style.height = `${imgHeight}px`;
+        img.style.left = `${left}px`;
+        img.style.top = `${top}px`;
+
+        timeoutId = setTimeout(() => {
+          this.renderer.removeChild(document.body, img);
+          this.imageSpawned = false;
+        }, 2000);
+      });
+
+      timeoutId = setTimeout(() => {
         this.renderer.removeChild(document.body, img);
         this.imageSpawned = false;
       }, 2000);
