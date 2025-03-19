@@ -28,10 +28,10 @@ import { FormsModule } from "@angular/forms";
 })
 export class DateRangePickerComponent {
   id = input.required<string>();
-
+  isFilterSelectionOpen = model<boolean>(false);
+  pickerOpened = model<boolean>(false);
   showLabel = input<boolean>(true);
   label = input<string>("Data");
-
   disabled = input<boolean>(false);
   required = input<boolean>(false);
   nullable = input<boolean>(false);
@@ -50,8 +50,6 @@ export class DateRangePickerComponent {
   focused = computed(() => {
     return this.startFocused() || this.endFocused();
   });
-
-  pickerOpened = signal<boolean>(false);
 
   delayed = computed(() => {
     return this.pickerOpened() || this.focused();
@@ -92,7 +90,7 @@ export class DateRangePickerComponent {
     });
 
     this.picker()?.closedStream.subscribe(() => {
-      this.pickerOpened.set(false);
+      this.pickerOpened.set(true);
 
       this.applyDates();
     });
@@ -119,6 +117,7 @@ export class DateRangePickerComponent {
    */
   onStartDateChange(event: MatDatepickerInputEvent<DateTime>) {
     const date = event.value?.toJSDate();
+    console.log(date);
     if (
       event.value !== null &&
       event.value !== undefined &&
@@ -138,7 +137,7 @@ export class DateRangePickerComponent {
 
   onEndDateChange(event: MatDatepickerInputEvent<DateTime>) {
     const date = event.value?.toJSDate();
-
+    console.log(date);
     if (
       event.value !== null &&
       event.value !== undefined &&

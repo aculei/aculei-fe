@@ -1,24 +1,26 @@
 import { CommonModule } from "@angular/common";
-import { Component, input, model, output } from "@angular/core";
+import { Component, input, model, output, signal } from "@angular/core";
 import { DateRangePickerComponent } from "../date-range-picker/date-range-picker.component";
 import { Image } from "../../pages/archive/archive.component";
+import { ClickOutsideDirective } from "../../directive/click-outside.directive";
 
 @Component({
   selector: "app-filters-datepicker",
-  imports: [CommonModule, DateRangePickerComponent],
+  imports: [CommonModule, DateRangePickerComponent, ClickOutsideDirective],
   templateUrl: "./filters-datepicker.component.html",
   styleUrl: "./filters-datepicker.component.css",
 })
 export class FiltersDatepickerComponent {
   selectedImageFilters = input<Image | undefined>();
-  isFilterSelectionOpen = false;
+  isFilterSelectionOpen = model<boolean>(false);
+  pickerOpened = signal<boolean>(false);
   start = model<Date | undefined>();
   end = model<Date | undefined>();
   dateChange = output<boolean>();
 
   toggleFilterSelection() {
     if (this.selectedImageFilters() == undefined) {
-      this.isFilterSelectionOpen = !this.isFilterSelectionOpen;
+      this.isFilterSelectionOpen.set(!this.isFilterSelectionOpen());
     }
   }
 
@@ -39,10 +41,23 @@ export class FiltersDatepickerComponent {
   removeFilter() {
     this.start.set(undefined);
     this.end.set(undefined);
+    this.dateChange.emit(true);
     this.toggleFilterSelection();
   }
 
   onDateChange() {
     this.dateChange.emit(true);
+  }
+
+  onMouseEnter() {
+    if (!this.selectedImageFilters()?.date) {
+      this.isFilterSelectionOpen.set(true);
+    }
+  }
+
+  onMouseLeave() {
+    // if (!this.selectedImageFilters()?.date && !this.pickerOpened()) {
+    //   this.isFilterSelectionOpen.set(false);
+    // }
   }
 }

@@ -37,6 +37,7 @@ export interface ArchiveSelectedFilters {
   animal?: string | string[];
   temperature?: (number | undefined)[];
   moon_phase?: string | string[];
+  date?: string | string[] | undefined;
 }
 
 export interface ArchiveFilters {
@@ -186,7 +187,21 @@ export class ArchiveComponent implements OnInit, OnDestroy {
   }
 
   fetchArchive() {
+    console.log(this.start());
     this.subscriptions["fetchSubscription"]?.unsubscribe();
+
+    if (this.start() && this.end()) {
+      const start = this.start()?.toLocaleString("it-IT", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      });
+      const end = this.end()?.toLocaleString("it-IT", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      });
+    }
 
     const filters: ArchiveSelectedFilters = {
       animal: this.selectedAnimalsFilters()?.animals,
@@ -199,6 +214,21 @@ export class ArchiveComponent implements OnInit, OnDestroy {
             ]
           : [],
       moon_phase: this.selectedMoonPhasesFilters()?.moonPhases,
+      date:
+        this.start() && this.end()
+          ? [
+              this.start()?.toLocaleString("it-IT", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              }) ?? "",
+              this.end()?.toLocaleString("it-IT", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              }) ?? "",
+            ]
+          : [],
     };
 
     // let params = new HttpParams().set("page", "0").set("size", "99999");

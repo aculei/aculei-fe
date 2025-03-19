@@ -1,11 +1,11 @@
 <div
-  class="relative inline-block text-left text-xs"
-  (mouseenter)="!selectedImageFilters()?.date && (isFilterSelectionOpen = true)"
-  (mouseleave)="
-    !selectedImageFilters()?.date && (isFilterSelectionOpen = false)
-  "
+  class="relative inline-block text-left text-xs bg-red-400"
+  (mouseenter)="onMouseEnter()"
 >
-  <div class="min-w-72 hover:text-black cursor-pointer">
+  <div
+    class="min-w-72 hover:text-black cursor-pointer"
+    (click)="toggleFilterSelection()"
+  >
     <div
       class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none uppercase"
     >
@@ -13,7 +13,7 @@
       {{ selectedImageFilters()?.date | date : "dd/MM/yyyy" }}
       } @else { @if (start() && end()) {
       {{ start() | date : "dd/MM/yyyy" }} - {{ end() | date : "dd/MM/yyyy" }}
-      } @else { Entire project
+      } @else { Entire project} }
       <svg
         class="-mr-1 size-5 transition-all duration-300"
         viewBox="0 0 20 20"
@@ -30,11 +30,10 @@
           clip-rule="evenodd"
         />
       </svg>
-      } }
     </div>
   </div>
 
-  @if (isFilterSelectionOpen) {
+  @if (isFilterSelectionOpen()) {
   <div
     class="absolute right-0 z-10 min-w-72 origin-top-left bg-black text-white uppercase"
   >
@@ -46,6 +45,8 @@
           [(start)]="start"
           [(end)]="end"
           (dateChange)="onDateChange()"
+          [(pickerOpened)]="pickerOpened"
+          [(isFilterSelectionOpen)]="isFilterSelectionOpen"
           class="w-full"
           id="1"
         ></app-date-range-picker>
