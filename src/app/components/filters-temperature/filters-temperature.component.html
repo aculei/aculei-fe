@@ -1,8 +1,9 @@
-<div class="relative inline-block text-left text-xs">
-  <div
-    class="min-w-36 hover:text-black cursor-pointer"
-    (click)="toggleFilterSelection()"
-  >
+<div
+  class="relative inline-block text-left text-xs"
+  (mouseenter)="isFilterSelectionOpen = true"
+  (mouseleave)="isFilterSelectionOpen = false"
+>
+  <div class="min-w-36 hover:text-black cursor-pointer">
     <div
       class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none uppercase"
     >
@@ -19,8 +20,7 @@
         aria-hidden="true"
         data-slot="icon"
         [ngClass]="{
-          'transform rotate-180':
-            isFilterSelectionOpen,
+          'transform rotate-180': isFilterSelectionOpen
         }"
       >
         <path
@@ -32,6 +32,7 @@
       }
     </div>
   </div>
+
   @if (isFilterSelectionOpen) {
   <div
     class="absolute right-0 z-10 min-w-36 origin-top-left bg-black text-white"

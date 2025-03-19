@@ -1,15 +1,17 @@
-<div class="relative inline-block text-left text-xs">
-  <div
-    class="min-w-72 hover:text-black cursor-pointer"
-    (click)="toggleFilterSelection()"
-  >
+<div
+  class="relative inline-block text-left text-xs"
+  (mouseenter)="isFilterSelectionOpen = true"
+  (mouseleave)="isFilterSelectionOpen = false"
+>
+  <div class="min-w-72 hover:text-black cursor-pointer">
     <div
-      class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none uppercase"
+      class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none uppercase h-7 min-h-7"
     >
       @if (selectedImageFilters()?.date) {
       {{ selectedImageFilters()?.date | date : "dd/MM/yyyy" }}
-      }@else { @if (start() && end()) { {{ start() | date : "dd/MM/yyyy" }} -
-      {{ end() | date : "dd/MM/yyyy" }} } @else { Entire project }
+      } @else { @if (start() && end()) {
+      {{ start() | date : "dd/MM/yyyy" }} - {{ end() | date : "dd/MM/yyyy" }}
+      } @else { Entire project
       <svg
         class="-mr-1 size-5 transition-all duration-300"
         viewBox="0 0 20 20"
@@ -17,8 +19,7 @@
         aria-hidden="true"
         data-slot="icon"
         [ngClass]="{
-          'transform rotate-180':
-            isFilterSelectionOpen,
+          'transform rotate-180': isFilterSelectionOpen
         }"
       >
         <path
@@ -27,9 +28,10 @@
           clip-rule="evenodd"
         />
       </svg>
-      }
+      } }
     </div>
   </div>
+
   @if (isFilterSelectionOpen) {
   <div
     class="absolute right-0 z-10 min-w-72 origin-top-left bg-black text-white uppercase"
@@ -51,7 +53,7 @@
       class="px-2 py-2 uppercase flex flex-col gap-1 hover:bg-green-700 text-white select-none cursor-pointer"
       (click)="setFirstYear()"
     >
-      Fist year
+      First year
     </div>
     <div
       class="px-2 py-2 uppercase flex flex-col gap-1 hover:bg-green-700 text-white select-none cursor-pointer"
