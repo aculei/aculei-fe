@@ -26,6 +26,7 @@
   >
     EXPERIENCE
   </div>
+  @if (currentRoute === '/home' || currentRoute === '/') {
   <div class=""></div>
   <div class=""></div>
   <div class=""></div>
@@ -37,6 +38,43 @@
       since 2020 around Picco dell'Aquila valley in Umbria, Italy.
     </div>
   </div>
+  } @else if (currentRoute === '/archive') {
+  <div class="uppercase col-span-8">
+    <div class="hyphens-auto break-words" lang="en">
+      ACULEI.XYZ IS AN INTERACTIVE ARCHIVE BASED ON 30.342 IMAGES (APR.25)
+      RECORDED SINCE 2020 BY 7 HUNTERCAMS AROUND THE PICCO DELL'AQUILA VALLEY,
+      UMBRIA ITALY. AN AI, TRAINED TO RESPECT THE AUTONOMOUS SHOOTING SYSTEM,
+      CLASSIFIES AND DIVIDES THE SELECTED IMAGES ACCORDING TO HIS OWN
+      INTER&shy;PRETATION. AS TODAY ITS ACCURACY IS 93%. KEEP THIS IN MIND AS
+      YOU NAVIGATE THROUGH THE ARCHIVE AND LET THE TECHNOLOGY DRIVE YOU AROUND
+      THE VALLEY SWARM.
+    </div>
+  </div>
+  } @else if (currentRoute === '/experience') {
+  <div class=""></div>
+  <div class=""></div>
+  <div class="uppercase col-span-6">
+    <div class="">
+      This layout replicates the interaction of an animal with a hunter cam.
+      Move within the frame to trigger the images. Press and hold to expand an
+      image, release to hide it.To enable this feature, please turn on your
+      webcam. No images of you will be recorded or stored at any time or for any
+      purpose.
+    </div>
+  </div>
+  } @else {
+  <div class=""></div>
+  <div class=""></div>
+  <div class=""></div>
+  <div class=""></div>
+  <div class=""></div>
+  <div class="uppercase max-w-[340px] col-span-3">
+    <div class="">
+      ACULEI is an interactive archive based on huntercameras shoot recorded
+      since 2020 around Picco dell'Aquila valley in Umbria, Italy.
+    </div>
+  </div>
+  }
   <div
     class="cursor-pointer flex justify-end"
     routerLinkActive
