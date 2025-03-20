@@ -4,7 +4,18 @@
 
 <div
   *ngIf="!userMediaAvailable"
-  class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white z-10 font-mono_lite"
+  class="text-sm uppercase absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white z-10 font-mono_lite"
 >
-  User media is not available, please allow access to the camera
+  <div class="flex flex-col gap-4">
+    <p>
+      This layout replicates the interaction of an animal with a hunter cam.
+      Move within the frame to trigger the images. Press and hold to expand an
+      image, release to hide it. To enable this feature, please turn on your
+      webcam.
+    </p>
+    <p>
+      No images of you will be recorded or stored at any time or for any
+      purpose.
+    </p>
+  </div>
 </div>

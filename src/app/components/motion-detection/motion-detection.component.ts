@@ -15,10 +15,8 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
   imageSpawned: boolean = false;
   drawInterval: any;
   image: Image | undefined;
+  userMediaAvailable: boolean = false;
   private localStream: MediaStream | null = null;
-  userMediaAvailable: boolean = true;
-  private localStream: MediaStream | null = null;
-  userMediaAvailable: boolean = true;
 
   private apiUrl = environment.apiUrl;
   private bucketUrl = environment.imageBaseUrl;
@@ -168,6 +166,7 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
       navigator.mediaDevices
         .getUserMedia({ video: true })
         .then((stream) => {
+          this.userMediaAvailable = true;
           localStream = stream;
           this.localStream = stream;
           camStream.srcObject = stream;
@@ -245,10 +244,17 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
 
       img.addEventListener("mousedown", () => {
         clearTimeout(timeoutId);
-        img.style.width = "80%";
-        img.style.height = "80%";
-        img.style.left = "10%";
-        img.style.top = "10%";
+
+        const scaledWidth = window.innerWidth * 0.8;
+        const scaledHeight = window.innerHeight * 0.8;
+
+        const left = (window.innerWidth - scaledWidth) / 2;
+        const top = (window.innerHeight - scaledHeight) / 2;
+
+        img.style.width = `${scaledWidth}px`;
+        img.style.height = `${scaledHeight}px`;
+        img.style.left = `${left}px`;
+        img.style.top = `${top}px`;
       });
 
       img.addEventListener("mouseup", () => {
