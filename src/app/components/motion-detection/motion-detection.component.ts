@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Component, AfterViewInit, Renderer2, OnDestroy } from "@angular/core";
 import { Image } from "../../pages/archive/archive.component";
 import { environment } from "../../../environments/environment.development";
@@ -184,23 +184,29 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  headers = new HttpHeaders({
+    skip_zrok_interstitial: "true",
+  });
+
   fetchImage() {
-    this.http.get<Image>(`${this.apiUrl}experience/random`).subscribe({
-      next: (response) => {
-        this.image = {
-          id: response.id || "",
-          cam: response.cam || "",
-          date: response.date || "",
-          moon_phase: response.moon_phase || "",
-          temperature: response.temperature || 0,
-          predicted_animal: response.predicted_animal || "",
-          image_name: response.image_name || "",
-        };
-      },
-      error: (error) => {
-        console.error("Error fetching image:", error);
-      },
-    });
+    this.http
+      .get<Image>(`${this.apiUrl}experience/random`, { headers: this.headers })
+      .subscribe({
+        next: (response) => {
+          this.image = {
+            id: response.id || "",
+            cam: response.cam || "",
+            date: response.date || "",
+            moon_phase: response.moon_phase || "",
+            temperature: response.temperature || 0,
+            predicted_animal: response.predicted_animal || "",
+            image_name: response.image_name || "",
+          };
+        },
+        error: (error) => {
+          console.error("Error fetching image:", error);
+        },
+      });
   }
 
   spawnImage(row: number, col: number, gridWidth: number, gridHeight: number) {
