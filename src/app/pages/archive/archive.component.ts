@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Component, model, OnDestroy, OnInit } from "@angular/core";
 import { environment } from "../../../environments/environment.development";
 import { FiltersDatepickerComponent } from "../../components/filters-datepicker/filters-datepicker.component";
@@ -146,16 +146,9 @@ export class ArchiveComponent implements OnInit, OnDestroy {
 
   isAnimalFilterOpen = false;
 
-  headers: HttpHeaders = new HttpHeaders({
-    skip_zrok_interstitial: "true",
-  });
-
   fetchFilters() {
     this.http
-      .get<any>(`${this.apiUrl}filters`, {
-        responseType: "json",
-        headers: this.headers,
-      })
+      .get<any>(`${this.apiUrl}filters`, { responseType: "json" })
       .subscribe({
         next: (response) => {
           this.filters = response.reduce((acc: ArchiveFilters, filter: any) => {
@@ -257,11 +250,7 @@ export class ArchiveComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions["fetchSubscriptions"] = this.http
-      .get<any>(`${this.apiUrl}archive`, {
-        params,
-        responseType: "json",
-        headers: { skip_zrok_interstitial: "true" },
-      })
+      .get<any>(`${this.apiUrl}archive`, { params, responseType: "json" })
       .subscribe({
         next: (response) => {
           const imagesArray = response.data || [];
