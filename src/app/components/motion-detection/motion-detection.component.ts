@@ -195,6 +195,7 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
           temperature: response.temperature || 0,
           predicted_animal: response.predicted_animal || "",
           image_name: response.image_name || "",
+          top_predictions: response.top_predictions || "",
         };
       },
       error: (error) => {

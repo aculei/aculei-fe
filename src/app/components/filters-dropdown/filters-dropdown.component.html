@@ -9,10 +9,10 @@
 >
   <div class="min-w-64 hover:text-black cursor-pointer">
     <div
-      class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none uppercase"
+      class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none uppercase text-white"
     >
-      @if (selectedImageFilters()?.predicted_animal) {
-      {{ selectedImageFilters()?.predicted_animal }}
+      @if (selectedImageFilters()?.top_predictions) {
+      {{ selectedImageFilters()?.top_predictions }}
       } @else {
       {{ getDropdownLabel() }}
       <svg

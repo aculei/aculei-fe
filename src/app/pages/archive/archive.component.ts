@@ -32,6 +32,7 @@ export interface Image {
   moon_phase: string;
   predicted_animal: string;
   temperature: number;
+  top_predictions: string;
 }
 export interface ArchiveSelectedFilters {
   animal?: string | string[];
@@ -255,6 +256,17 @@ export class ArchiveComponent implements OnInit, OnDestroy {
         next: (response) => {
           const imagesArray = response.data || [];
           if (Array.isArray(imagesArray)) {
+            imagesArray.map((image: Image) => {
+              const validJsonString = image.top_predictions.replace(/'/g, '"');
+              image.top_predictions = JSON.parse(validJsonString)
+                .map(
+                  (pred: { score: number; label: string }) =>
+                    `${pred.label}: ${(pred.score * 100).toFixed(2)}%`
+                )
+                .join("-");
+              return image;
+            });
+
             this.groupImagesByCam(imagesArray);
           } else {
             console.error("Error:", response);
