@@ -147,7 +147,6 @@ export class DateRangePickerComponent {
 
   onEndDateChange(event: MatDatepickerInputEvent<DateTime>) {
     const date = event.value?.toJSDate();
-    console.log(date, "ALLA FINE AAAAAAA");
     if (
       event.value !== null &&
       event.value !== undefined &&
