@@ -12,15 +12,15 @@ import { Image } from "../../pages/archive/archive.component";
 export class FiltersDatepickerComponent {
   selectedImageFilters = input<Image | undefined>();
   isFilterSelectionOpen = model<boolean>(false);
-  pickerOpened = signal<boolean>(false);
+  pickerOpened = model<boolean>(false);
   start = model<Date | undefined>();
   end = model<Date | undefined>();
   dateChange = output<boolean>();
 
   toggleFilterSelection() {
-    if (this.selectedImageFilters() == undefined) {
-      this.isFilterSelectionOpen.set(!this.isFilterSelectionOpen());
-    }
+    // if (this.selectedImageFilters() == undefined) {
+    //   this.isFilterSelectionOpen.set(!this.isFilterSelectionOpen());
+    // }
   }
 
   setFirstYear() {
@@ -55,6 +55,7 @@ export class FiltersDatepickerComponent {
   }
 
   onMouseLeave() {
+    console.log(this.pickerOpened());
     if (!this.selectedImageFilters()?.date && !this.pickerOpened()) {
       this.isFilterSelectionOpen.set(false);
     }

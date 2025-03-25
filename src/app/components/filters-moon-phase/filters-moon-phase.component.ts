@@ -27,11 +27,11 @@ export class FiltersMoonPhaseComponent {
   });
 
   moonPhases: MoonPhase[] = [
-    { id: 1, name: "New Moon", imageSvg: "assets/svg/1.svg" },
+    { id: 1, name: "New Moon", imageSvg: "assets/svg/5.svg" },
     { id: 2, name: "Waxing Crescent", imageSvg: "assets/svg/2.svg" },
     { id: 3, name: "First Quarter", imageSvg: "assets/svg/3.svg" },
     { id: 4, name: "Waxing Gibbous", imageSvg: "assets/svg/4.svg" },
-    { id: 5, name: "Full Moon", imageSvg: "assets/svg/5.svg" },
+    { id: 5, name: "Full Moon", imageSvg: "assets/svg/1.svg" },
     { id: 6, name: "Waning Gibbous", imageSvg: "assets/svg/6.svg" },
     { id: 7, name: "Last Quarter", imageSvg: "assets/svg/7.svg" },
     { id: 8, name: "Waning Crescent", imageSvg: "assets/svg/8.svg" },

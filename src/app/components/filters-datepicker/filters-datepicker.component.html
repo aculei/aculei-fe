@@ -46,6 +46,7 @@
           [(start)]="start"
           [(end)]="end"
           (dateChange)="onDateChange()"
+          (emitSecondDate)="this.isFilterSelectionOpen.set(false)"
           [(pickerOpened)]="pickerOpened"
           [(isFilterSelectionOpen)]="isFilterSelectionOpen"
           class="w-full"

@@ -19,10 +19,12 @@ import {
 } from "@angular/material/datepicker";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
-
+import { ChangeDetectionStrategy } from "@angular/core";
+import { provideNativeDateAdapter } from "@angular/material/core";
+import { MatFormFieldModule } from "@angular/material/form-field";
 @Component({
   selector: "app-date-range-picker",
-  imports: [CommonModule, FormsModule, MatDatepickerModule],
+  imports: [CommonModule, FormsModule, MatDatepickerModule, MatFormFieldModule],
   templateUrl: "./date-range-picker.component.html",
   styleUrl: "./date-range-picker.component.css",
 })
@@ -37,6 +39,7 @@ export class DateRangePickerComponent {
   nullable = input<boolean>(false);
 
   dateChange = output<boolean>();
+  emitSecondDate = output<boolean>();
 
   start = model<Date | undefined>();
   end = model<Date | undefined>();
@@ -51,24 +54,32 @@ export class DateRangePickerComponent {
     return this.startFocused() || this.endFocused();
   });
 
-  delayed = computed(() => {
-    return this.pickerOpened() || this.focused();
-  });
+  // delayed = computed(() => {
+  //   return this.pickerOpened() || this.focused();
+  // });
 
   lastValidStartDate: Date | undefined = undefined;
   lastValidEndDate: Date | undefined = undefined;
 
   picker = viewChild<MatDateRangePicker<any>>("picker");
 
+  onDatepickerOpened(): void {
+    this.pickerOpened.set(true);
+  }
+
+  onDatepickerClosed(): void {
+    this.pickerOpened.set(false);
+  }
+
   constructor() {
-    effect(() => {
-      const delayed = this.delayed();
-      untracked(() => {
-        if (!delayed) {
-          this.applyDates();
-        }
-      });
-    });
+    // effect(() => {
+    //   const delayed = this.delayed();
+    //   untracked(() => {
+    //     if (!delayed) {
+    //       this.applyDates();
+    //     }
+    //   });
+    // });
   }
 
   @HostListener("document:keydown", ["$event"])
@@ -86,11 +97,11 @@ export class DateRangePickerComponent {
 
   ngAfterViewInit() {
     this.picker()?.openedStream.subscribe(() => {
-      this.pickerOpened.set(true);
+      // this.pickerOpened.set(true);
     });
 
     this.picker()?.closedStream.subscribe(() => {
-      this.pickerOpened.set(true);
+      // this.pickerOpened.set(true);
 
       this.applyDates();
     });
@@ -117,7 +128,6 @@ export class DateRangePickerComponent {
    */
   onStartDateChange(event: MatDatepickerInputEvent<DateTime>) {
     const date = event.value?.toJSDate();
-    console.log(date);
     if (
       event.value !== null &&
       event.value !== undefined &&
@@ -129,15 +139,15 @@ export class DateRangePickerComponent {
       this.innerStart = this.lastValidStartDate ?? undefined;
     }
 
-    if (!this.delayed()) {
-      this.applyDates();
-    }
+    // if (!this.delayed()) {
+    //   this.applyDates();
+    // }
     this.dateChange.emit(true);
   }
 
   onEndDateChange(event: MatDatepickerInputEvent<DateTime>) {
     const date = event.value?.toJSDate();
-    console.log(date);
+    console.log(date, "ALLA FINE AAAAAAA");
     if (
       event.value !== null &&
       event.value !== undefined &&
@@ -149,10 +159,11 @@ export class DateRangePickerComponent {
       this.innerEnd = this.lastValidEndDate ?? undefined;
     }
 
-    if (!this.delayed()) {
-      this.applyDates();
-    }
     this.dateChange.emit(true);
+    if (date !== undefined) {
+      this.pickerOpened.set(false);
+      this.emitSecondDate.emit(true);
+    }
   }
 
   /*
