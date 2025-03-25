@@ -55,8 +55,8 @@ export class FiltersDatepickerComponent {
   }
 
   onMouseLeave() {
-    // if (!this.selectedImageFilters()?.date && !this.pickerOpened()) {
-    //   this.isFilterSelectionOpen.set(false);
-    // }
+    if (!this.selectedImageFilters()?.date && !this.pickerOpened()) {
+      this.isFilterSelectionOpen.set(false);
+    }
   }
 }
