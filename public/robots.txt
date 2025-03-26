@@ -1,1 +1,3 @@
 Sitemap: https://aculei.xyz/sitemap.xml
+User-agent: *
+Allow: /
