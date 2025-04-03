@@ -11,8 +11,8 @@
     <div
       class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none uppercase"
     >
-      @if (selectedImageFilters()?.top_predictions) {
-      {{ selectedImageFilters()?.top_predictions }}
+      @if (selectedImageFilters()?.predicted_animal) {
+      {{ selectedImageFilters()?.predicted_animal }}
       } @else {
       {{ getDropdownLabel() }}
       <svg

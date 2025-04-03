@@ -12,6 +12,18 @@
   src: url("/fonts/qhv2/Q-04LITE-Regular.ttf") format("opentype");
 }
 
+@layer utilities {
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  }
+  .text-shadow-md {
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+  }
+  .text-shadow-lg {
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+  }
+}
+
 .background-div {
   background-image: url("/assets/aculo.png");
 }

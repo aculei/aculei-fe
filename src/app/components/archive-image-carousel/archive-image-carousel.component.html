@@ -1,14 +1,22 @@
 <div class="relative w-full h-full flex">
   @if (images()?.length) {
-  <div class="h-full w-full flex justify-center items-center relative group">
+  <div
+    class="h-full w-full max-w-[calc(100%-6rem)] flex justify-center items-center relative group"
+  >
     <div class="w-[50%] relative">
       <button
         (click)="closeImageDetail()"
-        class="text-white absolute top-0 right-0 text-2xl p-1 mix-blend-difference z-10"
+        class="text-white absolute top-0 right-0 text-xl text-shadow p-1 z-10"
         title="Close Image [Esc]"
       >
         [X]
       </button>
+      <p
+        class="text-white absolute top-0 left-0 p-2 text-shadow"
+        title="Close Image [Esc]"
+      >
+        {{ images()?.[imageCurrentIndex()!]?.top_predictions }}
+      </p>
       <img
         ngOptimizedImage
         loading="lazy"
