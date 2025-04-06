@@ -220,7 +220,6 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
     img.style.transition = "all 0.3s ease-in-out";
 
     this.renderer.appendChild(document.body, img);
-
     let timeoutId: any;
 
     img.onload = () => {
@@ -246,8 +245,9 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
       img.addEventListener("mousedown", () => {
         clearTimeout(timeoutId);
 
-        const scaledWidth = window.innerWidth * 0.8;
-        const scaledHeight = window.innerHeight * 0.8;
+        const scaleFactor = 2;
+        const scaledWidth = imgWidth * scaleFactor;
+        const scaledHeight = imgHeight * scaleFactor;
 
         const left = (window.innerWidth - scaledWidth) / 2;
         const top = (window.innerHeight - scaledHeight) / 2;
