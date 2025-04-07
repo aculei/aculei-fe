@@ -30,9 +30,11 @@ export class FiltersDatepickerComponent {
     this.toggleFilterSelection();
   }
 
-  setSecondYear() {
-    this.start.set(new Date(2021, 1, 1));
-    this.end.set(new Date(2021, 1, 28));
+  setThisYear() {
+    const currentYear = new Date().getFullYear();
+
+    this.start.set(new Date(currentYear, 0, 1));
+    this.end.set(new Date(currentYear, 11, 31));
     this.dateChange.emit(true);
     this.toggleFilterSelection();
   }
@@ -55,7 +57,6 @@ export class FiltersDatepickerComponent {
   }
 
   onMouseLeave() {
-    console.log(this.pickerOpened());
     if (!this.selectedImageFilters()?.date && !this.pickerOpened()) {
       this.isFilterSelectionOpen.set(false);
     }
