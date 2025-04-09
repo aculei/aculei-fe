@@ -11,7 +11,7 @@ export class HomeComponent {
 
   constructor() {
     this.videoUrl = `https://videos.aculei.xyz/${
-      Math.floor(Math.random() * 20) + 1
+      Math.floor(Math.random() * 15) + 1
     }.mp4`;
   }
 }
