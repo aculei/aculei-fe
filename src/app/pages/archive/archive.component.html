@@ -41,7 +41,6 @@
         (imageClick)="onImageClick($event)"
         class="mb-4"
       ></app-archive-carousel-row>
-
       }
     </div>
     @if(currentIndex != undefined && currentImages != undefined) {
@@ -53,6 +52,8 @@
         [(images)]="currentImages"
         (closeImageDetail)="closeImageDetail()"
         [(selectedImageFilters)]="selectedImageFilters"
+        (nextGroupedImages)="updateCurrentImages($event)"
+        (prevGroupedImages)="updateCurrentImages($event)"
       ></app-archive-image-carousel>
     </div>
     }

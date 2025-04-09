@@ -1,4 +1,4 @@
-import { Component, HostListener, model, OnInit } from "@angular/core";
+import { Component, HostListener, model, OnInit, output } from "@angular/core";
 import { environment } from "../../../environments/environment.development";
 import { Image } from "../../pages/archive/archive.component";
 import { CommonModule } from "@angular/common";
@@ -15,6 +15,9 @@ export class ArchiveImageCarouselComponent implements OnInit {
   selectedImageFilters = model<Image | undefined>();
   imageBaseUrl = environment.imageBaseUrl;
 
+  prevGroupedImages = output<boolean>();
+  nextGroupedImages = output<boolean>();
+
   ngOnInit() {
     if (!this.imageCurrentIndex() && this.images()?.length) {
       this.imageCurrentIndex.set(0);
@@ -22,29 +25,35 @@ export class ArchiveImageCarouselComponent implements OnInit {
   }
 
   prevImage() {
-    if (this.images()?.length) {
+    if (this.imageCurrentIndex() === 0) {
+      // Prima immagine del carosello attuale
+      const prevImages = this.prevGroupedImages.emit(false);
+      // Se non ci sono caroselli precedenti, non facciamo nulla
+    } else if (this.images()?.length) {
       this.imageCurrentIndex.set(
         (this.imageCurrentIndex()! - 1 + this.images()!.length) %
           this.images()!.length
       );
-    }
-
-    const currentIndex = this.imageCurrentIndex();
-    if (currentIndex !== undefined && this.images()) {
-      this.selectedImageFilters.set(this.images()![currentIndex]);
+      const currentIndex = this.imageCurrentIndex();
+      if (currentIndex !== undefined && this.images()) {
+        this.selectedImageFilters.set(this.images()![currentIndex]);
+      }
     }
   }
 
   nextImage() {
-    if (this.images()?.length) {
+    if (this.imageCurrentIndex() === this.images()?.length! - 1) {
+      // Ultima immagine del carosello attuale
+      this.nextGroupedImages.emit(true);
+      // Se non ci sono altri caroselli, non facciamo nulla
+    } else if (this.images()?.length) {
       this.imageCurrentIndex.set(
         (this.imageCurrentIndex()! + 1) % this.images()!.length
       );
-    }
-
-    const currentIndex = this.imageCurrentIndex();
-    if (currentIndex !== undefined && this.images()) {
-      this.selectedImageFilters.set(this.images()![currentIndex]);
+      const currentIndex = this.imageCurrentIndex();
+      if (currentIndex !== undefined && this.images()) {
+        this.selectedImageFilters.set(this.images()![currentIndex]);
+      }
     }
   }
 

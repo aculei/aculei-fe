@@ -1,5 +1,5 @@
 <div
-  class="min-w-full h-9 flex items-center rounded-md px-2 py-0.5 mt-1 text-sm ring-1 ring-green-600 relative bg-gray-900 text-white"
+  class="min-w-full text-xs h-9 flex items-center rounded-md px-2 py-0.5 mt-1 ring-1 ring-green-600 relative bg-gray-900 text-white"
 >
   <mat-date-range-input class="min-w-full text-white" [rangePicker]="picker">
     <input
@@ -8,7 +8,7 @@
       (blur)="onStartBlur()"
       [(ngModel)]="start"
       (dateChange)="onStartDateChange($event)"
-      placeholder="Start"
+      placeholder="START"
       class="text-white placeholder-gray-400"
     />
     <input
@@ -17,7 +17,7 @@
       (blur)="onEndBlur()"
       [(ngModel)]="end"
       (dateChange)="onEndDateChange($event)"
-      placeholder="End"
+      placeholder="END"
       class="text-white placeholder-gray-400"
     />
   </mat-date-range-input>

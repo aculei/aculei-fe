@@ -284,6 +284,54 @@ export class ArchiveComponent implements OnInit, OnDestroy {
     return Object.keys(this.groupedImages).sort();
   }
 
+  updateCurrentImages(next: boolean) {
+    let newImages: Image[] = [];
+
+    if (next) {
+      newImages = this.getNextgroupedImages();
+      if (newImages?.length) {
+        this.currentImages = newImages;
+        this.currentIndex = 0;
+        this.selectedImageFilters.set(this.currentImages[0]);
+        this.showCarouselDetail = true;
+      }
+    } else {
+      newImages = this.getPrevgroupedImages();
+      if (newImages?.length) {
+        this.currentImages = newImages;
+        this.currentIndex = newImages.length - 1;
+        this.selectedImageFilters.set(this.currentImages[this.currentIndex]);
+        this.showCarouselDetail = true;
+      }
+    }
+  }
+
+  getNextgroupedImages(): Image[] {
+    const cams = this.getCams();
+    const currentCamIndex = cams.findIndex(
+      (cam) => cam === this.currentImages?.[0].cam
+    );
+
+    if (currentCamIndex !== -1 && currentCamIndex < cams.length - 1) {
+      const nextCam = cams[currentCamIndex + 1];
+      return this.groupedImages[nextCam];
+    }
+    return [];
+  }
+
+  getPrevgroupedImages(): Image[] {
+    const cams = this.getCams();
+    const currentCamIndex = cams.findIndex(
+      (cam) => cam === this.currentImages?.[0].cam
+    );
+
+    if (currentCamIndex > 0) {
+      const prevCam = cams[currentCamIndex - 1];
+      return this.groupedImages[prevCam];
+    }
+    return [];
+  }
+
   groupImagesByCam(images: Image[]) {
     this.groupedImages = images.reduce((acc, image) => {
       if (!acc[image.cam]) {
