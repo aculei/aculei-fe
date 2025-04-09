@@ -4,13 +4,13 @@
     <div class="w-[50%] relative">
       <button
         (click)="closeImageDetail()"
-        class="text-white absolute top-0 right-0 text-xl text-shadow p-1 z-10"
+        class="text-white absolute top-0 right-0 text-shadow p-1 z-10 uppercase text-[1.1rem]"
         title="Close Image [Esc]"
       >
         [X]
       </button>
       <p
-        class="text-white absolute top-0 left-0 p-2 text-shadow"
+        class="text-white absolute top-0 left-0 p-1 text-shadow uppercase"
         title="Close Image [Esc]"
       >
         {{ images()?.[imageCurrentIndex()!]?.top_predictions }}
