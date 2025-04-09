@@ -245,7 +245,7 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
       img.addEventListener("mousedown", () => {
         clearTimeout(timeoutId);
 
-        const scaleFactor = 2;
+        const scaleFactor = 1.4;
         const scaledWidth = imgWidth * scaleFactor;
         const scaledHeight = imgHeight * scaleFactor;
 
