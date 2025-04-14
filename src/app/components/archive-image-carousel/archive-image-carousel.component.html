@@ -1,7 +1,7 @@
 <div class="relative w-full h-full flex">
   @if (images()?.length) {
   <div class="h-full w-full flex justify-center items-center relative group">
-    <div class="w-[50%] relative">
+    <div class="w-[50%] relative cursor-pointer">
       <button
         (click)="closeImageDetail()"
         class="text-white absolute top-0 right-0 text-shadow p-1 z-10 uppercase text-[1.1rem]"
@@ -17,16 +17,6 @@
         [src]="imageBaseUrl + images()?.[imageCurrentIndex()!]?.image_name"
         [id]="images()?.[imageCurrentIndex()!]?.id"
       />
-
-      <div
-        (click)="prevImage()"
-        class="text-shadow absolute top-16 left-0 h-[calc(100%-4rem)] cursor-pointer w-1/2 group-hover:before:content-['PREVIOUS'] group-hover:before:absolute group-hover:before:top-1/2 group-hover:before:left-1/2 group-hover:before:-translate-x-1/2 group-hover:before:-translate-y-1/2 group-hover:before:mix-blend-lighten group-hover:before:px-2 group-hover:before:py-1 group-hover:before:rounded opacity-0 hover:opacity-100 transition-opacity"
-      ></div>
-
-      <div
-        (click)="nextImage()"
-        class="text-shadow absolute top-16 right-0 h-[calc(100%-4rem)] cursor-pointer w-1/2 group-hover:before:content-['NEXT'] group-hover:before:absolute group-hover:before:top-1/2 group-hover:before:left-1/2 group-hover:before:-translate-x-1/2 group-hover:before:-translate-y-1/2 group-hover:before:mix-blend-lighten group-hover:before:px-2 group-hover:before:py-1 group-hover:before:rounded opacity-0 hover:opacity-100 transition-opacity"
-      ></div>
     </div>
   </div>
   }
