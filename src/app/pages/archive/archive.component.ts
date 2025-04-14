@@ -263,7 +263,7 @@ export class ArchiveComponent implements OnInit, OnDestroy {
                   (pred: { score: number; label: string }) =>
                     `${pred.label}: ${(pred.score * 100).toFixed(2)}%`
                 )
-                .join("-");
+                .join(" - ");
               return image;
             });
 
