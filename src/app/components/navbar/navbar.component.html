@@ -2,32 +2,36 @@
   class="grid grid-cols-12 gap-x-3 fixed top-0 p-4 left-0 z-50 w-full text-xs text-gray-200 font-mono_lite h-26 mix-blend-difference"
   [ngClass]="{ relative: rlaArchive.isActive }"
 >
-  <div
-    class="cursor-pointer"
-    routerLinkActive
-    #rlaHome="routerLinkActive"
-    [routerLink]="['']"
-  >
-    HOME
+  <div>
+    <a
+      class="cursor-pointer"
+      routerLinkActive
+      #rlaHome="routerLinkActive"
+      [routerLink]="['']"
+      >HOME</a
+    >
   </div>
-  <div
-    class="cursor-pointer"
-    routerLinkActive
-    #rlaArchive="routerLinkActive"
-    [routerLink]="['archive']"
-  >
-    ARCHIVE
+  <div>
+    <a
+      class="px-2 cursor-pointer"
+      routerLinkActive
+      #rlaArchive="routerLinkActive"
+      [routerLink]="['archive']"
+      >ARCHIVE</a
+    >
   </div>
-  <div
-    class="cursor-pointer"
-    routerLinkActive
-    #rlaExperience="routerLinkActive"
-    [routerLink]="['experience']"
-  >
-    EXPERIENCE
+  <div>
+    <a
+      class="px-2 cursor-pointer"
+      routerLinkActive
+      #rlaExperience="routerLinkActive"
+      [routerLink]="['experience']"
+      >EXPERIENCE</a
+    >
   </div>
   <div></div>
   <div></div>
+  @if (!rlaAbout.isActive) {
   <div class="uppercase col-span-6">
     <div class="hyphens-auto break-words" lang="en">
       ACULEI.XYZ IS AN INTERACTIVE ARCHIVE BASED ON 30.342 IMAGES (APR.25)
@@ -39,12 +43,22 @@
       THE VALLEY SWARM.
     </div>
   </div>
+  } @if (rlaAbout.isActive) {
+  <div *ngIf="rlaAbout.isActive" class="uppercase col-span-6"></div>
+  }
+
   <div
-    class="cursor-pointer flex justify-end"
+    class="flex justify-end"
     routerLinkActive
     #rlaAbout="routerLinkActive"
     [routerLink]="['about']"
   >
-    ABOUT
+    <a
+      class="px-2 cursor-pointer"
+      routerLinkActive
+      #rlaAbout="routerLinkActive"
+      [routerLink]="['about']"
+      >ABOUT</a
+    >
   </div>
 </div>

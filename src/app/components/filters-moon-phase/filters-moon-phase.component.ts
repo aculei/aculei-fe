@@ -1,5 +1,11 @@
 import { CommonModule } from "@angular/common";
-import { Component, input, model } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  input,
+  model,
+} from "@angular/core";
 import { Image } from "../../pages/archive/archive.component";
 
 export interface MoonPhase {
@@ -59,22 +65,90 @@ export class FiltersMoonPhaseComponent {
 
   selectedMoonPhases = new Map<number, boolean>();
 
-  getIconFromName(name: string): string {
-    return this.moonPhases.find((phase) => phase.name === name)?.imageSvg || "";
+  isTouch = false;
+  touchStartTime = 0;
+  touchStartX = 0;
+  touchStartY = 0;
+
+  constructor(private elementRef: ElementRef) {}
+
+  @HostListener("document:click", ["$event"])
+  @HostListener("document:touchend", ["$event"])
+  onClickOutside(event: Event) {
+    if (
+      this.isFilterSelectionOpen &&
+      !this.elementRef.nativeElement.contains(event.target)
+    ) {
+      this.isFilterSelectionOpen = false;
+    }
   }
 
-  toggleFilterSelection() {
-    if (this.selectedImageFilters() == undefined) {
+  handleDropdownOpen() {
+    if (!this.selectedImageFilters()?.moon_phase) {
+      this.isFilterSelectionOpen = true;
+    }
+  }
+
+  handleDropdownClose() {
+    if (!this.selectedImageFilters()?.moon_phase && !this.isTouch) {
+      this.isFilterSelectionOpen = false;
+    }
+  }
+
+  handleTouchStart(event: TouchEvent) {
+    this.isTouch = true;
+    this.touchStartTime = new Date().getTime();
+    this.touchStartX = event.touches[0].clientX;
+    this.touchStartY = event.touches[0].clientY;
+  }
+
+  handleTouchEnd(event: TouchEvent) {
+    if (!(event.target as HTMLElement).closest('[role="menu"]')) {
+      const touchEndTime = new Date().getTime();
+      const touchDuration = touchEndTime - this.touchStartTime;
+
+      if (touchDuration < 300) {
+        this.toggleFilterSelection(event);
+      }
+    }
+
+    setTimeout(() => {
+      this.isTouch = false;
+    }, 300);
+  }
+
+  toggleFilterSelection(event?: Event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    if (this.selectedImageFilters()?.moon_phase === undefined) {
       this.isFilterSelectionOpen = !this.isFilterSelectionOpen;
     }
   }
 
-  toggleMoonPhase(phase: MoonPhase) {
+  getIconFromName(name: string): string {
+    return this.moonPhases.find((phase) => phase.name === name)?.imageSvg || "";
+  }
+
+  toggleMoonPhase(phase: MoonPhase, event?: Event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
     const isSelected = this.selectedMoonPhases.get(phase.id) || false;
     this.selectedMoonPhases.set(phase.id, !isSelected);
     this.selectedMoonPhasesFilters.set({
       moonPhases: this.getSelectedMoonPhases().map((phase) => phase.name),
     });
+  }
+
+  handleOptionTouch(event: Event, phase: MoonPhase) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.toggleMoonPhase(phase);
   }
 
   isSelected(phase: MoonPhase): boolean {

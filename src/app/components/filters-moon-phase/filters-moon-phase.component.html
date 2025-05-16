@@ -1,15 +1,14 @@
 <div
   class="relative inline-block text-left text-xs mr-2"
-  (mouseenter)="
-    !selectedImageFilters()?.moon_phase && (isFilterSelectionOpen = true)
-  "
-  (mouseleave)="
-    !selectedImageFilters()?.moon_phase && (isFilterSelectionOpen = false)
-  "
+  (mouseenter)="handleDropdownOpen()"
+  (mouseleave)="handleDropdownClose()"
+  (touchstart)="handleTouchStart($event)"
+  (touchend)="handleTouchEnd($event)"
 >
   <div class="min-w-36 hover:text-black cursor-pointer">
     <div
       class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none uppercase"
+      (click)="toggleFilterSelection($event)"
     >
       <div class="bg-green-700 text-white rounded flex gap-1 hover:text-black">
         @if (selectedImageFilters()?.moon_phase) {
@@ -49,12 +48,14 @@
   @if (isFilterSelectionOpen) {
   <div
     class="absolute right-0 z-10 min-w-36 origin-top-left bg-black text-white"
+    role="menu"
   >
     @for (moonPhase of moonPhases; track $index) {
     <div
       class="px-2 py-2 uppercase flex flex-col gap-1 select-none cursor-pointer hover:bg-green-700"
       [class.bg-green-700]="isSelected(moonPhase)"
-      (click)="toggleMoonPhase(moonPhase)"
+      (click)="toggleMoonPhase(moonPhase, $event)" 
+      (touchend)="handleOptionTouch($event, moonPhase)"
       [title]="moonPhase.name"
     >
       <img class="w-4 h-4" [src]="moonPhase.imageSvg" loading="eager" alt="" />

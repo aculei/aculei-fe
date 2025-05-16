@@ -1,11 +1,14 @@
 <div
   class="relative inline-block text-left text-xs"
-  (mouseenter)="!selectedImageFilters() && (isFilterSelectionOpen = true)"
-  (mouseleave)="!selectedImageFilters() && (isFilterSelectionOpen = false)"
+  (mouseenter)="handleDropdownOpen()"
+  (mouseleave)="handleDropdownClose()"
+  (touchstart)="handleTouchStart($event)"
+  (touchend)="handleTouchEnd($event)"
 >
   <div class="min-w-36 hover:text-black cursor-pointer">
     <div
       class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none uppercase"
+      (click)="toggleFilterSelection($event)"
     >
       @if (selectedImageFilters()) { @if (selectedImageFilters()?.temperature) {
       {{ selectedImageFilters()?.temperature }}° } @else { - } } @else { @if
@@ -36,6 +39,7 @@
   @if (isFilterSelectionOpen) {
   <div
     class="absolute right-0 z-10 min-w-36 origin-top-left bg-black text-white"
+    role="menu"
   >
     <div
       class="px-2 py-2 uppercase flex flex-col gap-1 text-white select-none cursor-pointer"
@@ -60,26 +64,29 @@
             [(ngModel)]="to"
             [min]="lowerBound()"
             [max]="upperBound()"
-            (change)="onFromChange()"
+            (change)="onToChange()"
           />
         </div>
       </div>
     </div>
     <div
       class="px-2 py-2 uppercase flex flex-col gap-1 hover:bg-green-700 text-white select-none cursor-pointer"
-      (click)="changeFilter(lowerBound(), 10)"
+      (click)="changeFilter(lowerBound(), 10, $event)"
+      (touchend)="handleOptionTouch($event, lowerBound(), 10)"
     >
       Below 10°
     </div>
     <div
       class="px-2 py-2 uppercase flex flex-col gap-1 hover:bg-green-700 text-white select-none cursor-pointer"
-      (click)="changeFilter(10, upperBound())"
+      (click)="changeFilter(10, upperBound(), $event)"
+      (touchend)="handleOptionTouch($event, 10, upperBound())"
     >
       Above 10°
     </div>
     <div
       class="px-2 py-2 uppercase flex flex-col gap-1 hover:bg-green-700 text-white select-none cursor-pointer"
-      (click)="changeFilter(lowerBound(), upperBound())"
+      (click)="changeFilter(lowerBound(), upperBound(), $event)"
+      (touchend)="handleOptionTouch($event, lowerBound(), upperBound())"
     >
       Entire range
     </div>

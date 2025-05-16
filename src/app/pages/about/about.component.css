@@ -1,0 +1,10 @@
+
+.about-page-active {
+    height: auto;
+    overflow-y: auto;
+  }
+  
+
+  .about-page-active app-navbar .col-span-6 {
+    opacity: 0; 
+  }

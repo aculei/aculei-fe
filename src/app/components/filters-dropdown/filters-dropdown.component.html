@@ -1,15 +1,14 @@
 <div
   class="relative inline-block text-left text-xs"
-  (mouseenter)="
-    !selectedImageFilters()?.top_predictions && (isFilterSelectionOpen = true)
-  "
-  (mouseleave)="
-    !selectedImageFilters()?.top_predictions && (isFilterSelectionOpen = false)
-  "
+  (mouseenter)="handleDropdownOpen()"
+  (mouseleave)="handleDropdownClose()"
+  (touchstart)="handleTouchStart($event)"
+  (touchend)="handleTouchEnd($event)"
 >
   <div class="min-w-64 hover:text-black cursor-pointer">
     <div
       class="inline-flex w-full justify-between gap-x-1.5 bg-green-700 px-3 py-1 select-none uppercase"
+      (click)="toggleFilterSelection($event)"
     >
       @if (selectedImageFilters()?.top_predictions) {
       {{ selectedImageFilters()?.top_predictions }}
@@ -47,7 +46,8 @@
       @for (animal of animals(); track $index) {
       <div
         class="block px-2 py-2 uppercase text-white select-none cursor-pointer hover:bg-green-700"
-        (click)="toggleAnimalSelection(animal)"
+        (click)="selectAnimal($event, animal)"
+        (touchend)="selectAnimal($event, animal)"
         [ngClass]="{
           'bg-green-700': isSelected(animal)
         }"
