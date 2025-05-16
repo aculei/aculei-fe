@@ -23,6 +23,7 @@ export class FooterComponent {
     "camera 5": "(STOLEN)",
     "camera 6": "43°10'26.2\"N 12°23'52.9\"E",
     "camera 7": "43°10'29.4\"N 12°23'44.2\"E",
+    "camera 8": "43°17'13.03\"N 12°39'76.99\"E",
     deer: 928,
     fox: 2633,
     hare: 283,

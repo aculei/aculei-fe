@@ -1,12 +1,19 @@
 import { CommonModule } from "@angular/common";
-import { Component, model, output, OnInit, input } from "@angular/core";
-import { combineLatest, debounce, distinctUntilChanged, interval } from "rxjs";
+import {
+  Component,
+  ElementRef,
+  Host,
+  HostListener,
+  OnInit,
+  input,
+  model,
+} from "@angular/core";
 import { toObservable } from "@angular/core/rxjs-interop";
+import { combineLatest, distinctUntilChanged } from "rxjs";
 import { Image } from "../../pages/archive/archive.component";
 export interface SelectedAnimalsFilters {
   animals: string[] | undefined;
 }
-
 @Component({
   selector: "app-filters-dropdown",
   imports: [CommonModule, CommonModule],
@@ -22,6 +29,24 @@ export class FiltersDropdownComponent implements OnInit {
   selectedAnimalsFilters$ = toObservable(this.selectedAnimalsFilters);
   selectedAnimals = new Map<string, boolean>();
   isFilterSelectionOpen = false;
+  touchStartTime = 0;
+  touchStartX = 0;
+  touchStartY = 0;
+
+  touchTimeout: any = null;
+
+  isTouch = false;
+
+  @HostListener("click", ["$event"])
+  @HostListener("document:touchend", ["$event"])
+  onClickOutside(event: Event) {
+    if (
+      this.isFilterSelectionOpen &&
+      !this.elementRef.nativeElement.contains(event.target)
+    ) {
+      this.isFilterSelectionOpen = false;
+    }
+  }
 
   ngOnInit() {
     combineLatest([this.selectedAnimalsFilters$])
@@ -29,15 +54,63 @@ export class FiltersDropdownComponent implements OnInit {
       .subscribe(() => {});
   }
 
-  constructor() {
+  constructor(private elementRef: ElementRef) {
     this.animals()?.forEach((animal) =>
       this.selectedAnimals.set(animal, false)
     );
   }
 
-  toggleFilterSelection() {
+  handleDropdownOpen() {
+    if (!this.selectedImageFilters()?.top_predictions) {
+      this.isFilterSelectionOpen = true;
+    }
+  }
+
+  handleDropdownClose() {
+    if (!this.selectedImageFilters()?.top_predictions && !this.isTouch) {
+      this.isFilterSelectionOpen = false;
+    }
+  }
+
+  handleTouchStart(event: TouchEvent) {
+    this.isTouch = true;
+    this.touchStartTime = new Date().getTime();
+    this.touchStartX = event.touches[0].clientX;
+    this.touchStartY = event.touches[0].clientY;
+  }
+
+  handleTouchEnd(event: TouchEvent) {
+    if (!(event.target as HTMLElement).closest('[role="none"]')) {
+      const touchEndTime = new Date().getTime();
+      const touchDuration = touchEndTime - this.touchStartTime;
+
+      if (touchDuration < 300) {
+        this.toggleFilterSelection(event);
+      }
+    }
+
+    setTimeout(() => {
+      this.isTouch = false;
+    }, 300);
+  }
+
+  toggleFilterSelection(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+
     if (this.selectedImageFilters() == undefined) {
       this.isFilterSelectionOpen = !this.isFilterSelectionOpen;
+    }
+  }
+
+  selectAnimal(event: Event, animal: string) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.toggleAnimalSelection(animal);
+
+    if (this.isTouch) {
+      event.stopPropagation();
     }
   }
 

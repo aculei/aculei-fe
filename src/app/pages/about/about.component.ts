@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 
 @Component({
   selector: "app-about",
@@ -6,4 +6,14 @@ import { Component } from "@angular/core";
   templateUrl: "./about.component.html",
   styleUrl: "./about.component.css",
 })
-export class AboutComponent {}
+export class AboutComponent implements OnInit {
+  ngOnInit() {
+    window.scrollTo(0, 0);
+
+    document.body.classList.add("about-page-active");
+  }
+
+  ngOnDestroy() {
+    document.body.classList.remove("about-page-active");
+  }
+}
