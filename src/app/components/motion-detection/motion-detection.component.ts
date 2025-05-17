@@ -204,6 +204,85 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
     });
   }
 
+  // spawnImage(row: number, col: number, gridWidth: number, gridHeight: number) {
+  //   this.fetchImage();
+
+  //   if (!this.image) {
+  //     return;
+  //   }
+
+  //   this.imageSpawned = true;
+
+  //   const img = this.renderer.createElement("img");
+  //   img.src = this.bucketUrl + this.image?.image_name;
+  //   img.style.position = "absolute";
+  //   img.style.visibility = "hidden";
+  //   img.style.transition = "all 0.3s ease-in-out";
+
+  //   this.renderer.appendChild(document.body, img);
+  //   let timeoutId: any;
+
+  //   img.onload = () => {
+  //     let imgWidth = img.naturalWidth / 6;
+  //     let imgHeight = img.naturalHeight / 6;
+
+  //     let left = col * gridWidth + (gridWidth / 2 - imgWidth / 2);
+  //     let top = row * gridHeight + (gridHeight / 2 - imgHeight / 2);
+
+  //     const maxLeft = window.innerWidth - imgWidth;
+  //     const maxTop = window.innerHeight - imgHeight - 80;
+
+  //     left = Math.max(10, Math.min(left, maxLeft));
+  //     top = Math.max(10, Math.min(top, maxTop));
+
+  //     img.style.width = `${imgWidth}px`;
+  //     img.style.height = `${imgHeight}px`;
+  //     img.style.left = `${left}px`;
+  //     img.style.top = `${top}px`;
+  //     img.style.visibility = "visible";
+  //     img.style.cursor = "pointer";
+
+  //     img.addEventListener("mousedown", () => {
+  //       clearTimeout(timeoutId);
+
+  //       const maxScaleWidth = window.innerWidth * 0.8;
+  //       const maxScaleHeight = window.innerHeight * 0.8;
+  //       const scaleFactor = Math.min(
+  //         maxScaleWidth / imgWidth,
+  //         maxScaleHeight / imgHeight,
+  //         1.4
+  //       );
+  //       const scaledWidth = imgWidth * scaleFactor;
+  //       const scaledHeight = imgHeight * scaleFactor;
+
+  //       const left = (window.innerWidth - scaledWidth) / 2;
+  //       const top = (window.innerHeight - scaledHeight) / 2;
+
+  //       img.style.width = `${scaledWidth}px`;
+  //       img.style.height = `${scaledHeight}px`;
+  //       img.style.left = `${left}px`;
+  //       img.style.top = `${top}px`;
+  //     });
+
+  //     img.addEventListener("mouseup", () => {
+  //       img.style.width = `${imgWidth}px`;
+  //       img.style.height = `${imgHeight}px`;
+  //       img.style.left = `${left}px`;
+  //       img.style.top = `${top}px`;
+
+  //       timeoutId = setTimeout(() => {
+  //         this.renderer.removeChild(document.body, img);
+  //         this.imageSpawned = false;
+  //       }, 2000);
+  //     });
+
+  //     timeoutId = setTimeout(() => {
+  //       this.renderer.removeChild(document.body, img);
+  //       this.imageSpawned = false;
+  //     }, 2000);
+  //   };
+  // }
+
   spawnImage(row: number, col: number, gridWidth: number, gridHeight: number) {
     this.fetchImage();
 
@@ -242,7 +321,8 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
       img.style.visibility = "visible";
       img.style.cursor = "pointer";
 
-      img.addEventListener("mousedown", () => {
+      // Helper function to scale the image up
+      const scaleImageUp = () => {
         clearTimeout(timeoutId);
 
         const maxScaleWidth = window.innerWidth * 0.8;
@@ -255,16 +335,16 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
         const scaledWidth = imgWidth * scaleFactor;
         const scaledHeight = imgHeight * scaleFactor;
 
-        const left = (window.innerWidth - scaledWidth) / 2;
-        const top = (window.innerHeight - scaledHeight) / 2;
+        const newLeft = (window.innerWidth - scaledWidth) / 2;
+        const newTop = (window.innerHeight - scaledHeight) / 2;
 
         img.style.width = `${scaledWidth}px`;
         img.style.height = `${scaledHeight}px`;
-        img.style.left = `${left}px`;
-        img.style.top = `${top}px`;
-      });
+        img.style.left = `${newLeft}px`;
+        img.style.top = `${newTop}px`;
+      };
 
-      img.addEventListener("mouseup", () => {
+      const scaleImageDown = () => {
         img.style.width = `${imgWidth}px`;
         img.style.height = `${imgHeight}px`;
         img.style.left = `${left}px`;
@@ -274,6 +354,19 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
           this.renderer.removeChild(document.body, img);
           this.imageSpawned = false;
         }, 2000);
+      };
+
+      img.addEventListener("mousedown", scaleImageUp);
+      img.addEventListener("mouseup", scaleImageDown);
+
+      img.addEventListener("touchstart", (e: any) => {
+        e.preventDefault();
+        scaleImageUp();
+      });
+
+      img.addEventListener("touchend", (e: any) => {
+        e.preventDefault();
+        scaleImageDown();
       });
 
       timeoutId = setTimeout(() => {
