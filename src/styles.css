@@ -25,11 +25,8 @@
 }
 
 .background-div {
-  background-image: url("/assets/aculo.png");
+  background-image: url("/assets/aculo.webp");
 }
-/* .background-archive-detail {
-  background-image: url('/assets/aculo.png');
-} */
 .splide__slide.is-visible.is-active {
   outline: none !important;
   border: none !important;
