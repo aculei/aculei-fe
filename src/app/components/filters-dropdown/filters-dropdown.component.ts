@@ -28,7 +28,7 @@ export class FiltersDropdownComponent implements OnInit {
   });
   selectedAnimalsFilters$ = toObservable(this.selectedAnimalsFilters);
   selectedAnimals = new Map<string, boolean>();
-  isFilterSelectionOpen = false;
+  isFilterSelectionOpen = model(false);
   touchStartTime = 0;
   touchStartX = 0;
   touchStartY = 0;
@@ -44,7 +44,7 @@ export class FiltersDropdownComponent implements OnInit {
       this.isFilterSelectionOpen &&
       !this.elementRef.nativeElement.contains(event.target)
     ) {
-      this.isFilterSelectionOpen = false;
+      this.isFilterSelectionOpen.set(false);
     }
   }
 
@@ -62,13 +62,13 @@ export class FiltersDropdownComponent implements OnInit {
 
   handleDropdownOpen() {
     if (!this.selectedImageFilters()?.top_predictions) {
-      this.isFilterSelectionOpen = true;
+      this.isFilterSelectionOpen.set(true);
     }
   }
 
   handleDropdownClose() {
     if (!this.selectedImageFilters()?.top_predictions && !this.isTouch) {
-      this.isFilterSelectionOpen = false;
+      this.isFilterSelectionOpen.set(false);
     }
   }
 
@@ -99,7 +99,7 @@ export class FiltersDropdownComponent implements OnInit {
     event.stopPropagation();
 
     if (this.selectedImageFilters() == undefined) {
-      this.isFilterSelectionOpen = !this.isFilterSelectionOpen;
+      this.isFilterSelectionOpen.set(!this.isFilterSelectionOpen());
     }
   }
 

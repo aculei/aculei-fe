@@ -1,6 +1,5 @@
 <div
   class="relative inline-block text-left text-xs"
-
   (touchstart)="handleTouchStart($event)"
   (touchend)="handleTouchEnd($event)"
 >
@@ -20,7 +19,7 @@
         aria-hidden="true"
         data-slot="icon"
         [ngClass]="{
-          'transform rotate-180': isFilterSelectionOpen
+          'transform rotate-180': isFilterSelectionOpen()
         }"
       >
         <path
@@ -33,7 +32,7 @@
     </div>
   </div>
 
-  @if (isFilterSelectionOpen) {
+  @if (isFilterSelectionOpen()) {
   <div
     class="absolute right-0 z-10 w-64 origin-top-left bg-black text-white"
     role="menu"

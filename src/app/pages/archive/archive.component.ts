@@ -95,6 +95,8 @@ export class ArchiveComponent implements OnInit, OnDestroy {
   currentImages: Image[] | undefined;
   currentIndex: number | undefined;
 
+  animalFiltersDropdpown = model(false);
+
   filters: ArchiveFilters = {
     animal: {
       name: "animal",
@@ -349,6 +351,7 @@ export class ArchiveComponent implements OnInit, OnDestroy {
     this.currentIndex = event.index;
     this.currentImages = event.images;
     this.selectedImageFilters.set(event.images[event.index]);
+    this.animalFiltersDropdpown.set(false);
   }
 
   ngOnDestroy() {

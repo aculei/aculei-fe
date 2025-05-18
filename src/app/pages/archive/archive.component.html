@@ -11,6 +11,7 @@
             [animals]="filters.animal?.values"
             [(selectedAnimalsFilters)]="selectedAnimalsFilters"
             [selectedImageFilters]="selectedImageFilters()"
+            [(isFilterSelectionOpen)]="animalFiltersDropdpown"
           ></app-filters-dropdown>
           <app-filters-datepicker
             [(start)]="start"
