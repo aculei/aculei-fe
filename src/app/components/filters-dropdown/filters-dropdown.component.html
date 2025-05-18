@@ -1,7 +1,6 @@
 <div
   class="relative inline-block text-left text-xs"
-  (mouseenter)="handleDropdownOpen()"
-  (mouseleave)="handleDropdownClose()"
+
   (touchstart)="handleTouchStart($event)"
   (touchend)="handleTouchEnd($event)"
 >
@@ -45,7 +44,7 @@
     <div role="none">
       @for (animal of animals(); track $index) {
       <div
-        class="block px-2 py-2 uppercase text-white select-none cursor-pointer hover:bg-green-700"
+        class="block px-2 py-2 uppercase text-white select-none cursor-pointer"
         (click)="selectAnimal($event, animal)"
         (touchend)="selectAnimal($event, animal)"
         [ngClass]="{
