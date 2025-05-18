@@ -283,6 +283,8 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
   //   };
   // }
 
+  isOpen: boolean = false;
+
   spawnImage(row: number, col: number, gridWidth: number, gridHeight: number) {
     this.fetchImage();
 
@@ -323,6 +325,8 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
 
       // Helper function to scale the image up
       const scaleImageUp = () => {
+        console.log("Image clicked to scale up");
+        this.isOpen = true;
         clearTimeout(timeoutId);
 
         const maxScaleWidth = window.innerWidth * 0.8;
@@ -345,6 +349,7 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
       };
 
       const scaleImageDown = () => {
+        this.isOpen = false;
         img.style.width = `${imgWidth}px`;
         img.style.height = `${imgHeight}px`;
         img.style.left = `${left}px`;
@@ -356,8 +361,20 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
         }, 2000);
       };
 
-      img.addEventListener("mousedown", scaleImageUp);
-      img.addEventListener("mouseup", scaleImageDown);
+      // img.addEventListener("mousedown", scaleImageUp);
+      // img.addEventListener("mouseup", scaleImageDown);
+
+      img.addEventListener("click", (e: any) => {
+        console.log("", this.isOpen);
+        console.log("Image clicked");
+        if (this.isOpen) {
+          console.log("Image clicked to scale down");
+          scaleImageDown();
+        } else {
+          console.log("Image clicked to scale up");
+          scaleImageUp();
+        }
+      });
 
       img.addEventListener("touchstart", (e: any) => {
         e.preventDefault();

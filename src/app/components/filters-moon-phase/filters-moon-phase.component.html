@@ -1,7 +1,6 @@
 <div
   class="relative inline-block text-left text-xs mr-2"
-  (mouseenter)="handleDropdownOpen()"
-  (mouseleave)="handleDropdownClose()"
+
   (touchstart)="handleTouchStart($event)"
   (touchend)="handleTouchEnd($event)"
 >
@@ -52,7 +51,7 @@
   >
     @for (moonPhase of moonPhases; track $index) {
     <div
-      class="px-2 py-2 uppercase flex flex-col gap-1 select-none cursor-pointer hover:bg-green-700"
+      class="px-2 py-2 uppercase flex flex-col gap-1 select-none cursor-pointer"
       [class.bg-green-700]="isSelected(moonPhase)"
       (click)="toggleMoonPhase(moonPhase, $event)" 
       (touchend)="handleOptionTouch($event, moonPhase)"

@@ -6,3 +6,42 @@
 .no-scrollbar::-webkit-scrollbar {
   display: none; /* Per Chrome, Safari e Opera */
 }
+
+
+.image{
+  -webkit-user-drag: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
+}
+
+/* Add some gentle transition for the cursor changes */
+#carousel {
+  transition: cursor 0.2s ease;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
+}
+
+/* Cursor styles */
+.cursor-grab {
+  cursor: grab;
+}
+
+.grabbing {
+  cursor: grabbing !important;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
