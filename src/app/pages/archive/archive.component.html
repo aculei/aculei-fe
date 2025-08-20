@@ -46,7 +46,7 @@
     </div>
     @if(currentIndex != undefined && currentImages != undefined) {
     <div
-      class="flex w-screen h-full justify-center items-center absolute top-0 left-0 z-40"
+      class="flex w-full h-full justify-center items-center absolute top-0 left-0 z-40"
     >
       <app-archive-image-carousel
         [(imageCurrentIndex)]="currentIndex"
@@ -55,6 +55,7 @@
         [(selectedImageFilters)]="selectedImageFilters"
         (nextGroupedImages)="updateCurrentImages($event)"
         (prevGroupedImages)="updateCurrentImages($event)"
+        class="w-full h-full"
       ></app-archive-image-carousel>
     </div>
     }

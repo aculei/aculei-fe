@@ -24,34 +24,31 @@
   }
 }
 
+.cursor-prev {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='40'><text x='0' y='30' font-family='monospace' font-size='0.8em' fill='white'>PREVIOUS</text></svg>")
+      0 0,
+    auto;
+}
+
+.cursor-next {
+  font-family: "mono-lite-regular";
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='40'><text x='0' y='30' font-family='monospace' font-size='0.8em' fill='white'>NEXT</text></svg>")
+      0 0,
+    auto;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
 .background-div {
   background-image: url("/assets/aculo.webp");
-}
-.splide__slide.is-visible.is-active {
-  outline: none !important;
-  border: none !important;
-}
-
-.splide__arrow--next.transparent-background {
-  background-color: transparent;
-}
-.splide__arrow--prev.transparent-background {
-  background-color: transparent;
-}
-
-.splide__arrow--next.transparent-background svg {
-  fill: white;
-}
-.splide__arrow--prev.transparent-background svg {
-  fill: white;
-}
-
-.splide__arrow--prev.arrow-none {
-  display: none !important;
-}
-
-.splide__arrow--next.arrow-none {
-  display: none !important;
 }
 
 #camStream,
@@ -79,5 +76,5 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: "mono-lite-regular";
 }

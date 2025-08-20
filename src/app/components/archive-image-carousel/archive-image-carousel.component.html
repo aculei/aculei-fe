@@ -1,24 +1,31 @@
-<div class="relative w-full h-full flex">
-  @if (images()?.length) {
-  <div class="h-full w-full flex justify-center items-center relative group">
-    <div class="w-[50%] relative cursor-pointer">
-      <button
-        (click)="closeImageDetail()"
-        class="text-white absolute top-0 right-0 p-1 z-10 uppercase text-[1.1rem]"
-        title="Close Image [Esc]"
-      >
-        [X]
-      </button>
-      <img
-        oncontextmenu="return false"
-        ngOptimizedImage
-        loading="lazy"
-        class="z-40 w-full"
-        (click)="handleImageClick($event)"
-        [src]="imageBaseUrl + images()?.[imageCurrentIndex()!]?.image_name"
-        [id]="images()?.[imageCurrentIndex()!]?.id"
-      />
-    </div>
+<div
+  class="relative w-full h-full flex justify-center items-center noselect font-mono_lite text-xs"
+>
+  <div class="relative w-[50%] md:max-h-[80%] min-w-[50%]">
+    <button
+      (click)="closeImageDetail()"
+      class="text-white absolute top-1 right-1 p-2 uppercase text-[1.2rem] z-50 cursor-pointer"
+      title="Close Image [Esc]"
+    >
+      [X]
+    </button>
+    <img
+      oncontextmenu="return false"
+      ngOptimizedImage
+      loading="lazy"
+      class="z-40 md:object-contain"
+      (click)="handleImageClick($event)"
+      [src]="imageBaseUrl + images()?.[imageCurrentIndex()!]?.image_name"
+      [id]="images()?.[imageCurrentIndex()!]?.id"
+    />
+
+    <div
+      class="absolute top-0 left-0 h-full w-1/2 z-10 cursor-prev"
+      (click)="handleImageClick($event)"
+    ></div>
+    <div
+      class="absolute top-0 right-0 h-full w-1/2 z-10 cursor-next"
+      (click)="handleImageClick($event)"
+    ></div>
   </div>
-  }
 </div>
