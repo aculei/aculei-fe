@@ -20,7 +20,7 @@ export class FooterComponent {
       "43°10'26.3\"N 12°23'53.4\"E (OVERWHELMED BY THE DRAINAGE CANAL)",
     "camera 3": "43°10'19.0\"N 12°23'49.6\"E",
     "camera 4": "43°10'29.6\"N 12°23'54.5\"E",
-    "camera 5": "(STOLEN)",
+    "camera 5": "43°17'62.15\"N 12°40'01.69\"E (STOLEN)",
     "camera 6": "43°10'26.2\"N 12°23'52.9\"E",
     "camera 7": "43°10'29.4\"N 12°23'44.2\"E",
     "camera 8": "43°10'16.7\"N 12°23'51.7\"E",
