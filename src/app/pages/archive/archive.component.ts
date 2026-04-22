@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Component, model, OnDestroy, OnInit } from "@angular/core";
-import { environment } from "../../../environments/environment.development";
+import { environment } from "../../../environments/environment";
 import { FiltersDatepickerComponent } from "../../components/filters-datepicker/filters-datepicker.component";
 import {
   FiltersMoonPhaseComponent,
@@ -24,6 +24,7 @@ import { ImageDetailVideoComponent } from "../../components/image-detail-video/i
 import { CommonModule } from "@angular/common";
 import { ArchiveImageCarouselComponent } from "../../components/archive-image-carousel/archive-image-carousel.component";
 import { ArchiveCarouselRowComponent } from "../../components/archive-carousel-row/archive-carousel-row.component";
+
 export interface Image {
   id: string;
   cam: string;
@@ -121,7 +122,7 @@ export class ArchiveComponent implements OnInit, OnDestroy {
         .pipe(
           debounce(() => interval(250)),
           distinctUntilChanged(),
-          skip(1)
+          skip(1),
         )
         .subscribe(() => {
           this.fetchArchive();
@@ -190,7 +191,6 @@ export class ArchiveComponent implements OnInit, OnDestroy {
   }
 
   fetchArchive() {
-    console.log(this.start());
     this.subscriptions["fetchSubscription"]?.unsubscribe();
 
     if (this.start() && this.end()) {
@@ -263,7 +263,7 @@ export class ArchiveComponent implements OnInit, OnDestroy {
               image.top_predictions = JSON.parse(validJsonString)
                 .map(
                   (pred: { score: number; label: string }) =>
-                    `${pred.label}: ${(pred.score * 100).toFixed(2)}%`
+                    `${pred.label}: ${(pred.score * 100).toFixed(2)}%`,
                 )
                 .join(" - ");
               return image;
@@ -311,7 +311,7 @@ export class ArchiveComponent implements OnInit, OnDestroy {
   getNextgroupedImages(): Image[] {
     const cams = this.getCams();
     const currentCamIndex = cams.findIndex(
-      (cam) => cam === this.currentImages?.[0].cam
+      (cam) => cam === this.currentImages?.[0].cam,
     );
 
     if (currentCamIndex !== -1 && currentCamIndex < cams.length - 1) {
@@ -324,7 +324,7 @@ export class ArchiveComponent implements OnInit, OnDestroy {
   getPrevgroupedImages(): Image[] {
     const cams = this.getCams();
     const currentCamIndex = cams.findIndex(
-      (cam) => cam === this.currentImages?.[0].cam
+      (cam) => cam === this.currentImages?.[0].cam,
     );
 
     if (currentCamIndex > 0) {
@@ -335,13 +335,16 @@ export class ArchiveComponent implements OnInit, OnDestroy {
   }
 
   groupImagesByCam(images: Image[]) {
-    this.groupedImages = images.reduce((acc, image) => {
-      if (!acc[image.cam]) {
-        acc[image.cam] = [];
-      }
-      acc[image.cam].push(image);
-      return acc;
-    }, {} as Record<string, Image[]>);
+    this.groupedImages = images.reduce(
+      (acc, image) => {
+        if (!acc[image.cam]) {
+          acc[image.cam] = [];
+        }
+        acc[image.cam].push(image);
+        return acc;
+      },
+      {} as Record<string, Image[]>,
+    );
 
     return this.groupedImages;
   }

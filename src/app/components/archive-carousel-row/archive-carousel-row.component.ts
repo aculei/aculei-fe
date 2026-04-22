@@ -1,18 +1,5 @@
-import {
-  Component,
-  computed,
-  effect,
-  ElementRef,
-  EventEmitter,
-  Input,
-  input,
-  Output,
-  output,
-  signal,
-  ViewChild,
-  viewChild,
-} from "@angular/core";
-import { environment } from "../../../environments/environment.development";
+import { Component, ElementRef, input, output, ViewChild } from "@angular/core";
+import { environment } from "../../../environments/environment";
 import { Image } from "../../pages/archive/archive.component";
 import { CommonModule } from "@angular/common";
 

@@ -1,5 +1,5 @@
 import { Component, HostListener, model, OnInit, output } from "@angular/core";
-import { environment } from "../../../environments/environment.development";
+import { environment } from "../../../environments/environment";
 import { Image } from "../../pages/archive/archive.component";
 import { CommonModule } from "@angular/common";
 
@@ -18,6 +18,9 @@ export class ArchiveImageCarouselComponent implements OnInit {
   prevGroupedImages = output<boolean>();
   nextGroupedImages = output<boolean>();
 
+  isLoading = model<boolean>(true);
+  private loadingTimeout: any;
+
   ngOnInit() {
     if (!this.imageCurrentIndex() && this.images()?.length) {
       this.imageCurrentIndex.set(0);
@@ -25,14 +28,14 @@ export class ArchiveImageCarouselComponent implements OnInit {
   }
 
   prevImage() {
+    this.setLoadingWithDelay();
+
     if (this.imageCurrentIndex() === 0) {
-      // Prima immagine del carosello attuale
       const prevImages = this.prevGroupedImages.emit(false);
-      // Se non ci sono caroselli precedenti, non facciamo nulla
     } else if (this.images()?.length) {
       this.imageCurrentIndex.set(
         (this.imageCurrentIndex()! - 1 + this.images()!.length) %
-          this.images()!.length
+          this.images()!.length,
       );
       const currentIndex = this.imageCurrentIndex();
       if (currentIndex !== undefined && this.images()) {
@@ -42,13 +45,13 @@ export class ArchiveImageCarouselComponent implements OnInit {
   }
 
   nextImage() {
+    this.setLoadingWithDelay();
+
     if (this.imageCurrentIndex() === this.images()?.length! - 1) {
-      // Ultima immagine del carosello attuale
       this.nextGroupedImages.emit(true);
-      // Se non ci sono altri caroselli, non facciamo nulla
     } else if (this.images()?.length) {
       this.imageCurrentIndex.set(
-        (this.imageCurrentIndex()! + 1) % this.images()!.length
+        (this.imageCurrentIndex()! + 1) % this.images()!.length,
       );
       const currentIndex = this.imageCurrentIndex();
       if (currentIndex !== undefined && this.images()) {
@@ -57,7 +60,14 @@ export class ArchiveImageCarouselComponent implements OnInit {
     }
   }
 
-  closeImageDetail() {
+  onImageLoad() {
+    if (this.loadingTimeout) {
+      clearTimeout(this.loadingTimeout);
+    }
+    this.isLoading.set(false);
+  }
+
+  closeImage() {
     this.images.set(undefined);
     this.imageCurrentIndex.set(undefined);
     this.selectedImageFilters.set(undefined);
@@ -75,9 +85,19 @@ export class ArchiveImageCarouselComponent implements OnInit {
     }
   }
 
+  setLoadingWithDelay() {
+    if (this.loadingTimeout) {
+      clearTimeout(this.loadingTimeout);
+    }
+
+    this.loadingTimeout = setTimeout(() => {
+      this.isLoading.set(true);
+    }, 250);
+  }
+
   @HostListener("document:keydown.escape", ["$event"])
   handleEscapeKey(event: KeyboardEvent) {
-    this.closeImageDetail();
+    this.closeImage();
   }
 
   @HostListener("document:keydown.arrowleft", ["$event"])

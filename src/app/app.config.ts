@@ -2,18 +2,11 @@ import { ApplicationConfig, provideZoneChangeDetection } from "@angular/core";
 import { provideRouter } from "@angular/router";
 
 import { routes } from "./app.routes";
-import {
-  provideHttpClient,
-  withFetch,
-  withInterceptors,
-} from "@angular/common/http";
+import { provideHttpClient, withFetch } from "@angular/common/http";
 import { LOCALE_ID } from "@angular/core";
 import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
 import { MAT_DATE_LOCALE } from "@angular/material/core";
-import {
-  LuxonDateAdapter,
-  provideLuxonDateAdapter,
-} from "@angular/material-luxon-adapter";
+import { provideLuxonDateAdapter } from "@angular/material-luxon-adapter";
 import { registerLocaleData } from "@angular/common";
 import localeIt from "@angular/common/locales/it";
 

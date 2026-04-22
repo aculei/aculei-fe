@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, AfterViewInit, Renderer2, OnDestroy } from "@angular/core";
 import { Image } from "../../pages/archive/archive.component";
-import { environment } from "../../../environments/environment.development";
+import { environment } from "../../../environments/environment";
 import { NgIf } from "@angular/common";
 
 @Component({
@@ -21,7 +21,10 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
   private apiUrl = environment.apiUrl;
   private bucketUrl = environment.imageBaseUrl;
 
-  constructor(private renderer: Renderer2, private http: HttpClient) {}
+  constructor(
+    private renderer: Renderer2,
+    private http: HttpClient,
+  ) {}
 
   ngAfterViewInit(): void {
     this.initMotionDetection();
@@ -46,13 +49,13 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
 
   initMotionDetection() {
     const canvas: HTMLCanvasElement = document.getElementById(
-      "canvas"
+      "canvas",
     ) as HTMLCanvasElement;
     const canvasFinal: HTMLCanvasElement = document.getElementById(
-      "canvasFinal"
+      "canvasFinal",
     ) as HTMLCanvasElement;
     const camStream: HTMLVideoElement = document.getElementById(
-      "camStream"
+      "camStream",
     ) as HTMLVideoElement;
 
     const context = canvas.getContext("2d");
@@ -67,7 +70,7 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
     const gridHeight = window.innerHeight / rows;
 
     const movementGrid: number[][] = Array.from({ length: rows }, () =>
-      Array(cols).fill(0)
+      Array(cols).fill(0),
     );
 
     const draw = () => {
@@ -82,14 +85,14 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
           0,
           0,
           canvas.width,
-          canvas.height
+          canvas.height,
         );
         activeFrame = activeFrame === 0 ? 1 : 0;
         const currentFrame = context.getImageData(
           0,
           0,
           canvas.width,
-          canvas.height
+          canvas.height,
         );
         const previousFrame = frames[activeFrame];
 
@@ -109,10 +112,10 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
 
           const diffR = Math.abs(currentFrame.data[i] - previousFrame.data[i]);
           const diffG = Math.abs(
-            currentFrame.data[i + 1] - previousFrame.data[i + 1]
+            currentFrame.data[i + 1] - previousFrame.data[i + 1],
           );
           const diffB = Math.abs(
-            currentFrame.data[i + 2] - previousFrame.data[i + 2]
+            currentFrame.data[i + 2] - previousFrame.data[i + 2],
           );
 
           if (diffR > 50 || diffG > 50 || diffB > 50) {
@@ -251,7 +254,7 @@ export class MotionDetectionComponent implements AfterViewInit, OnDestroy {
         const scaleFactor = Math.min(
           maxScaleWidth / imgWidth,
           maxScaleHeight / imgHeight,
-          1.4
+          1.4,
         );
         const scaledWidth = imgWidth * scaleFactor;
         const scaledHeight = imgHeight * scaleFactor;
