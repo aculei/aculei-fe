@@ -1,6 +1,6 @@
 <video id="camStream"></video>
 <canvas id="canvas"></canvas>
-<canvas id="canvasFinal"></canvas>
+<canvas id="canvasFinal" [class.pointer-events-none]="!userMediaAvailable"></canvas>
 
 <div
   *ngIf="!userMediaAvailable"
