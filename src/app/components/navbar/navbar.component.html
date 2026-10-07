@@ -4,10 +4,10 @@
 >
   <div class="md:col-span-1">
     <a
-      class="cursor-pointer"
+      class="px-2 cursor-pointer"
       routerLinkActive
       #rlaHome="routerLinkActive"
-      [routerLink]="['']"
+      [routerLink]="['/']"
       >HOME</a
     >
   </div>
@@ -16,7 +16,7 @@
       class="px-2 cursor-pointer"
       routerLinkActive
       #rlaArchive="routerLinkActive"
-      [routerLink]="['archive']"
+      [routerLink]="['/archive']"
       >ARCHIVE</a
     >
   </div>
@@ -25,14 +25,14 @@
       class="px-2 cursor-pointer"
       routerLinkActive
       #rlaExperience="routerLinkActive"
-      [routerLink]="['experience']"
+      [routerLink]="['/experience']"
       >EXPERIENCE</a
     >
   </div>
   <div></div>
   <div></div>
   @if (!rlaAbout.isActive) {
-  <div class="uppercase col-span-2 md:col-span-6">
+  <div class="uppercase col-span-2 z-1 md:col-span-6">
     <div class="hidden md:block hyphens-auto break-words" lang="en">
       ACULEI.XYZ IS AN INTERACTIVE ARCHIVE BASED ON 40.970 IMAGES (JAN.26)
       RECORDED SINCE 2020 BY 9 HUNTERCAMS AROUND THE PICCO DELL'AQUILA VALLEY,
@@ -47,17 +47,12 @@
   <div *ngIf="rlaAbout.isActive" class="uppercase col-span-6"></div>
   }
 
-  <div
-    class="flex justify-end flex-grow md:col-span-1"
-    routerLinkActive
-    #rlaAbout="routerLinkActive"
-    [routerLink]="['about']"
-  >
+  <div class="flex justify-end flex-grow md:col-span-1">
     <a
       class="px-2 cursor-pointer"
       routerLinkActive
       #rlaAbout="routerLinkActive"
-      [routerLink]="['about']"
+      [routerLink]="['/about']"
       >ABOUT</a
     >
   </div>
