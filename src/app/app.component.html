@@ -1,8 +1,4 @@
-<ng-container *ngIf="isMobile">
-  <app-mobile></app-mobile>
-</ng-container>
-
-<ng-container *ngIf="!isMobile">
+<ng-container>
   <div class="flex flex-col h-full">
     <app-navbar></app-navbar>
     <router-outlet></router-outlet>

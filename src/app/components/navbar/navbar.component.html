@@ -1,8 +1,8 @@
 <div
-  class="grid grid-cols-12 gap-x-3 top-0 p-4 left-0 z-50 w-full text-xs text-gray-200 font-mono_lite h-26 mix-blend-difference"
+  class="flex md:grid md:grid-cols-12 md:gap-x-3 top-0 p-4 left-0 z-50 w-full text-xs text-gray-200 font-mono_lite h-26 mix-blend-difference"
   [ngClass]="{ relative: rlaArchive.isActive }"
 >
-  <div>
+  <div class="md:col-span-1">
     <a
       class="cursor-pointer"
       routerLinkActive
@@ -11,7 +11,7 @@
       >HOME</a
     >
   </div>
-  <div>
+  <div class="md:col-span-1">
     <a
       class="px-2 cursor-pointer"
       routerLinkActive
@@ -20,7 +20,7 @@
       >ARCHIVE</a
     >
   </div>
-  <div>
+  <div class="md:col-span-1">
     <a
       class="px-2 cursor-pointer"
       routerLinkActive
@@ -32,8 +32,8 @@
   <div></div>
   <div></div>
   @if (!rlaAbout.isActive) {
-  <div class="uppercase col-span-6">
-    <div class="hyphens-auto break-words" lang="en">
+  <div class="uppercase col-span-2 md:col-span-6">
+    <div class="hidden md:block hyphens-auto break-words" lang="en">
       ACULEI.XYZ IS AN INTERACTIVE ARCHIVE BASED ON 40.970 IMAGES (JAN.26)
       RECORDED SINCE 2020 BY 9 HUNTERCAMS AROUND THE PICCO DELL'AQUILA VALLEY,
       UMBRIA ITALY. AN AI, TRAINED TO RESPECT THE AUTONOMOUS SHOOTING SYSTEM,
@@ -48,7 +48,7 @@
   }
 
   <div
-    class="flex justify-end"
+    class="flex justify-end flex-grow md:col-span-1"
     routerLinkActive
     #rlaAbout="routerLinkActive"
     [routerLink]="['about']"
